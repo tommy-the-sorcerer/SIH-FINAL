@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title>FALCON-AI logo</title>
+  <desc>White leaf mark inside a navy circle</desc>
+  <circle cx="64" cy="64" r="58" fill="#17324d"/>
+  <path d="M89 34c-23 2-41 14-46 31-4 14 4 28 18 30 16 2 29-10 30-27 1-12-3-23-2-34Z" fill="#fff"/>
+  <path d="M37 91c14-16 28-30 48-48" fill="none" stroke="#17324d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M64 68c8 0 15 3 22 9" fill="none" stroke="#17324d" stroke-width="4" stroke-linecap="round"/>
+</svg>

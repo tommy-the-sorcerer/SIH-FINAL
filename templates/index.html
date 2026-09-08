@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FALCON-AI | Crop Health Advisory</title>
+    <link rel="icon" type="image/svg+xml" href="/static/images/falcon-logo.svg?v={{ v if v else '1.0' }}">
+    <link rel="apple-touch-icon" href="/static/images/falcon-logo.svg?v={{ v if v else '1.0' }}">
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Dynamic Cache-Busted CSS Link -->
+    <link rel="stylesheet" href="/static/css/style.css?v={{ v if v else '1.0' }}">
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,te,kn,ta,ml,hi',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body class="dark-theme">
+
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-notification">Copied to clipboard!</div>
+
+    <!-- DP VIEWER MODAL -->
+    <div id="dp-modal" onclick="closeDpModal()">
+        <div class="dp-modal-content" onclick="event.stopPropagation()">
+            <button class="close-dp-btn" onclick="closeDpModal()">&times;</button>
+            <div class="dp-frame">
+                <img id="dp-modal-img" src="" alt="Profile Picture">
+            </div>
+            <h3 id="dp-modal-name">Member Name</h3>
+        </div>
+    </div>
+
+    <!-- PRELOADER -->
+    <div id="site-preloader">
+        <div class="falcon-loader-logo"><img src="/static/images/falcon-logo.svg" alt="FALCON-AI logo"></div>
+        <div class="loader-bar-container">
+            <div class="loader-bar-fill" id="preloader-fill"></div>
+        </div>
+        <div class="loader-text" id="preloader-text">INITIALIZING FALCON-AI... 0%</div>
+    </div>
+
+    <!-- FARMER REGISTRATION MODAL (Flawless Form Submission) -->
+    <div id="login-modal" class="custom-modal show-modal">
+        <div class="modal-card">
+            <div class="modal-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+            <h2>Farmer registration</h2>
+            <p>Enter your details to access the FALCON-AI crop health advisory service.</p>
+
+            <!-- FIX 1: Guaranteed preventDefault inside the HTML tag -->
+            <form class="registration-fields" onsubmit="event.preventDefault(); submitFarmerRegistration(event);">
+                <div class="input-group">
+                    <label for="farmer-name"><i class="fa-solid fa-user"></i> Full Name</label>
+                    <input type="text" id="farmer-name" placeholder="e.g. Ramesh Kumar" required autocomplete="off">
+                </div>
+
+                <div class="input-group">
+                    <label for="farmer-phone"><i class="fa-solid fa-phone"></i> Mobile Number</label>
+                    <input type="tel" id="farmer-phone" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required autocomplete="off">
+                </div>
+
+                <button type="submit" class="btn-primary-action">
+                    <span>Continue to Portal</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LANGUAGE PICKER MODAL -->
+    <div id="lang-picker-modal" class="custom-modal">
+        <div class="modal-card">
+            <div class="modal-icon"><i class="fa-solid fa-language"></i></div>
+            <h2>Select language</h2>
+            <p>Choose your preferred language for the application.</p>
+
+            <div class="lang-grid">
+                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('en')">English</button>
+                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('te')">తెలుగు (Telugu)</button>
+                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('kn')">ಕನ್ನಡ (Kannada)</button>
+                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('ta')">தமிழ் (Tamil)</button>
+                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('ml')">മലയാളം (Malayalam)</button>
+                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('hi')">हिन्दी (Hindi)</button>
+            </div>
+
+            <button type="button" class="btn-secondary-action" onclick="closeLangModal()" style="margin-top: 15px;">Close</button>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            <img class="site-logo-image" src="/static/images/falcon-logo.svg" alt="FALCON-AI logo">
+            <span class="site-logo-name">FALCON-AI</span>
+        </div>
+        <div class="nav-controls">
+            <button type="button" class="nav-control-btn" id="current-lang-indicator" onclick="openLangModal()">
+                <i class="fa-solid fa-globe"></i> <span id="lang-text">English</span>
+            </button>
+
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <p class="eyebrow">CROP HEALTH ADVISORY SERVICE</p>
+        <h1>Early crop health information for farmers <span>before damage spreads</span></h1>
+        <p>FALCON-AI analyses a crop image, identifies possible disease symptoms, highlights the affected area, and combines optional field readings to suggest the next safe step.</p>
+
+        <!-- UPLOAD CARD -->
+        <div class="upload-card">
+            <i class="fa-solid fa-file-image upload-icon"></i>
+            <h2>Start a crop assessment</h2>
+            <p class="upload-subtext">Use a clear leaf photograph from this computer or capture one with the camera.</p>
+
+            <div class="upload-actions">
+                <button type="button" class="btn-upload" onclick="triggerSmartCamera()">
+                    <i class="fa-solid fa-camera"></i> Open Camera
+                </button>
+                <input type="file" id="file-input-camera" accept="image/*" capture="environment" onchange="handleImageUpload(event)">
+
+                <button type="button" class="btn-upload btn-secondary" onclick="triggerGallery()">
+                    <i class="fa-solid fa-image"></i> Upload from PC
+                </button>
+                <input type="file" id="file-input-gallery" accept="image/*" onchange="handleImageUpload(event)">
+            </div>
+
+            <!-- Image Preview -->
+            <div id="image-drop-zone" class="image-drop-zone" role="button" tabindex="0" onclick="triggerGallery()">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                <span>Drop a crop image here or choose one from this PC</span>
+                <small>JPG, PNG, or WEBP · maximum 15 MB</small>
+            </div>
+            <div id="preview-container">
+                <img id="image-preview" src="" alt="Specimen Preview">
+            </div>
+
+            <div class="sensor-panel">
+                <div class="sensor-panel-heading">
+                    <span><i class="fa-solid fa-microchip"></i> Field context</span>
+                    <small>Optional sensor readings</small>
+                </div>
+                <div class="sensor-grid">
+                    <label>Soil moisture (%)<input type="number" id="soil-moisture" min="0" max="100" placeholder="e.g. 42"></label>
+                    <label>Temperature (&deg;C)<input type="number" id="temperature" min="-10" max="70" placeholder="e.g. 31"></label>
+                    <label>Air humidity (%)<input type="number" id="humidity" min="0" max="100" placeholder="e.g. 62"></label>
+                </div>
+                <div class="sensor-presets" aria-label="Demo sensor presets">
+                    <button type="button" onclick="applySensorPreset('normal')">Normal field</button>
+                    <button type="button" onclick="applySensorPreset('dry')">Dry soil</button>
+                    <button type="button" onclick="applySensorPreset('clear')">Clear sensors</button>
+                </div>
+            </div>
+
+            <!-- SCANNING PROGRESS -->
+            <div class="analysis-progress" id="analysis-progress">
+                <div class="nest-stage-container">
+                    <div class="falcon-nest">🪹</div>
+                    <div class="orbiting-falcon" id="orbiting-falcon">🦅</div>
+                </div>
+
+                <div class="scanner-top-info">
+                    <div class="progress-status">
+                        <span class="status-dot"></span>
+                        <span id="scan-status-text">Preparing image assessment...</span>
+                    </div>
+                    <div class="scan-percentage" id="scan-percentage">0%</div>
+                </div>
+
+                <div class="scan-bar-bg">
+                    <div class="scan-bar-fill" id="scan-bar-fill"></div>
+                </div>
+
+                <div class="scanner-telemetry">
+                    <span id="telemetry-hash">Image quality checks</span>
+                    <span id="telemetry-frame">Local processing</span>
+                </div>
+            </div>
+
+            <!-- RESULT CARD -->
+            <div id="result-card">
+                <h3 id="result-title">Status</h3>
+                <p id="result-disease">Disease Name</p>
+                <p id="result-confidence">Confidence: 0%</p>
+                <p id="result-message">Diagnostic summary...</p>
+                <div class="result-metrics">
+                    <div><strong id="result-leaf-area">0%</strong><span>leaf area found</span></div>
+                    <div><strong id="result-damage">0%</strong><span>estimated visible damage</span></div>
+                    <div><strong id="result-markers">0</strong><span>lesion markers</span></div>
+                </div>
+                <img id="result-overlay" class="result-overlay" src="" alt="Annotated leaf showing estimated damage">
+                <div class="recommendation-box">
+                    <p class="recommendation-kicker"><i class="fa-solid fa-seedling"></i> Recommended next action</p>
+                    <strong id="result-action">Waiting for analysis</strong>
+                    <p id="result-dosage"></p>
+                    <p id="result-sensor-status"></p>
+                    <small id="result-reason"></small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="history-section">
+        <div class="history-heading">
+            <div>
+                <p class="eyebrow">FIELD LOG</p>
+                <h2 class="section-title">Recent Diagnoses</h2>
+            </div>
+            <button type="button" class="history-export" onclick="exportPredictionHistory()"><i class="fa-solid fa-download"></i> Export report</button>
+        </div>
+        <div id="prediction-history" class="prediction-history">
+            <p class="empty-history">Your completed analyses will appear here.</p>
+        </div>
+    </section>
+
+    <!-- LIVE CAMERA MODAL -->
+    <div id="camera-modal">
+        <div class="camera-box">
+            <div class="camera-header">
+                <h3><i class="fa-solid fa-video"></i> Live Camera Feed</h3>
+                <button type="button" class="close-cam-btn" onclick="closeCameraModal()">&times;</button>
+            </div>
+            <video id="webcam-stream" autoplay playsinline></video>
+            <canvas id="photo-canvas" style="display: none;"></canvas>
+            <div class="camera-controls">
+                <button type="button" class="btn-upload" onclick="captureWebcamFrame()">
+                    <i class="fa-solid fa-circle-dot"></i> Snap Photo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISION SECTION -->
+    <section class="vision-section">
+        <h2 class="section-title">What this service provides</h2>
+        <div class="vision-grid">
+            <div class="vision-card">
+                <i class="fa-solid fa-leaf"></i>
+                <h3>Image-based screening</h3>
+                <p>A first-level assessment of visible crop symptoms from a photograph, designed to support timely field action.</p>
+            </div>
+            <div class="vision-card">
+                <i class="fa-solid fa-microscope"></i>
+                <h3>Evidence on the image</h3>
+                <p>Possible affected regions are marked on the uploaded leaf so the result can be reviewed rather than accepted as a black box.</p>
+            </div>
+            <div class="vision-card">
+                <i class="fa-solid fa-globe"></i>
+                <h3>Field-ready workflow</h3>
+                <p>Optional soil and weather readings help separate possible dehydration stress from a disease-like visual symptom.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="team-section">
+        <h2 class="section-title">Project Team</h2>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="avatar-box" onclick="openDpModal('/static/images/ganii-2.jpeg', 'D. Lakshmi Ganesh')">
+                    <img src="/static/images/ganii-2.jpeg" alt="D. Lakshmi Ganesh" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
+                </div>
+                <h3>D. Lakshmi Ganesh</h3>
+                <p class="email-text"><a href="mailto:lakshmiganeshdarimadugu24@gmail.com">lakshmiganeshdarimadugu24@gmail.com</a></p>
+                <p class="phone-text" onclick="copyToClipboard('+918008742279', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 80087 42279</p>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar-box kowsik-avatar" onclick="openDpModal('/static/images/kowsik.jpeg', 'T. Kowsik')">
+                    <img src="/static/images/kowsik.jpeg" alt="T. Kowsik" class="avatar-img kowsik-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
+                </div>
+                <h3>T. Kowsik</h3>
+                <p class="email-text"><a href="mailto:vu.241fa04a65@gmail.com">vu.241fa04a65@gmail.com</a></p>
+                <p class="phone-text" onclick="copyToClipboard('+919381119137', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 93811 19137</p>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar-box" onclick="openDpModal('/static/images/anand.jpeg', 'P. Anand Babu')">
+                    <img src="/static/images/anand.jpeg" alt="P. Anand Babu" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
+                </div>
+                <h3>P. Anand Babu</h3>
+                <p class="email-text"><a href="mailto:vu.241fa04a60@gmail.com">vu.241fa04a60@gmail.com</a></p>
+                <p class="phone-text" onclick="copyToClipboard('+918978105292', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 89781 05292</p>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar-box" onclick="openDpModal('/static/images/ajay.jpeg', 'CH. Ajay Kumar')">
+                    <img src="/static/images/ajay.jpeg" alt="CH. Ajay Kumar" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
+                </div>
+                <h3>CH. Ajay Kumar</h3>
+                <p class="email-text"><a href="mailto:ajayguptha710@gmail.com">ajayguptha710@gmail.com</a></p>
+                <p class="phone-text" onclick="copyToClipboard('+916304613594', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 63046 13594</p>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar-box" onclick="openDpModal('/static/images/image.jpeg', 'C. Uhanjali')">
+                    <img src="/static/images/image.jpeg" alt="C. Uhanjali" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
+                </div>
+                <h3>C. Uhanjali</h3>
+                <p class="email-text"><a href="mailto:uhanjalicherukuri21@gmail.com">uhanjalicherukuri21@gmail.com</a></p>
+                <p class="phone-text" onclick="copyToClipboard('+918341758535', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 83417 58535</p>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar-box" onclick="openDpModal('/static/images/immanuel.jpeg', 'R. Immanuel Praneeth')">
+                    <img src="/static/images/immanuel.jpeg" alt="R. Immanuel Praneeth" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
+                </div>
+                <h3>R. Immanuel Praneeth</h3>
+                <p class="email-text"><a href="mailto:immanuelpraneeth2006@gmail.com">immanuelpraneeth2006@gmail.com</a></p>
+                <p class="phone-text" onclick="copyToClipboard('+916305908311', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 63059 08311</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>FALCON-AI &middot; SIH26131 &middot; Crop health advisory prototype for Smart India Hackathon</p>
+    </footer>
+
+    <!-- FIX 2: Added cache-buster to the JS file so it actually loads your new code -->
+    <script src="/static/js/app.js?v={{ v if v else '1.0' }}"></script>
+</body>
+</html>
