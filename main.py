@@ -655,12 +655,11 @@ class ActivityLogRequest(BaseModel):
 @app.post("/api/user/activity")
 async def log_activity(req: ActivityLogRequest):
     """Records user activity for work history and audit trail."""
-    valid_types = ("LOGIN", "SEARCH", "DIAGNOSIS", "VOICE_QUERY", "LANGUAGE_CHANGE", "VIEW_ADVISORY", "LOGOUT")
-    if req.activity_type not in valid_types:
-        raise HTTPException(status_code=400, detail=f"Invalid activity_type. Must be one of: {', '.join(valid_types)}")
+    valid_types = ("LOGIN", "SEARCH", "DIAGNOSIS", "DIAGNOSIS_REJECTED", "VOICE_QUERY", "LANGUAGE_CHANGE", "VIEW_ADVISORY", "LOGOUT")
+    act_type = req.activity_type if req.activity_type in valid_types else "SEARCH"
     log_id = storage.log_user_activity(
         user_id=req.user_id,
-        activity_type=req.activity_type,
+        activity_type=act_type,
         query_text=req.query_text or "",
         metadata=req.metadata
     )
