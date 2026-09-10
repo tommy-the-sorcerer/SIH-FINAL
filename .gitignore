@@ -24,3 +24,7 @@ Thumbs.db
 
 # Local secrets
 .env
+
+# User runtime uploads
+static/uploads/*
+!static/uploads/.gitkeep
