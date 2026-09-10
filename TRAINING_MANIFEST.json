@@ -1,0 +1,76 @@
+{
+  "manifest_version": "1.2.0",
+  "project": "FALCON-AI",
+  "problem_statement": "SIH26131",
+  "client": "Government of Maharashtra",
+  "created_at": "2026-09-09T13:39:00+05:30",
+  "governance": {
+    "baseline_model_frozen": true,
+    "baseline_weights_path": "Models/PlantDiseaseDetection.pt",
+    "baseline_model_size_bytes": 457175703,
+    "baseline_classes_count": 116,
+    "promotion_rule": "Candidate must strictly achieve superior mAP@0.50 on the 141-image Golden Test Set without regressions."
+  },
+  "hardware_environment": {
+    "device": "CPU",
+    "processor": "Intel Core Multi-Core Architecture",
+    "physical_cores": 14,
+    "logical_cores": 20,
+    "system_ram_gb": 23.71,
+    "disk_free_gb": 374.28,
+    "cuda_available": false
+  },
+  "software_stack": {
+    "python": "3.11.9",
+    "pytorch": "2.14.0+cpu",
+    "ultralytics": "8.1.0+",
+    "opencv_python_headless": "4.9.0",
+    "platform": "Windows 10"
+  },
+  "training_hyperparameters": {
+    "architecture_candidate": "yolov8m-cls / yolov8s",
+    "input_resolution": [640, 640],
+    "epochs": 50,
+    "batch_size": 16,
+    "optimizer": "AdamW",
+    "initial_lr": 0.001,
+    "weight_decay": 0.0005,
+    "seed": 42,
+    "patience": 10,
+    "augmentations": {
+      "hsv_h": 0.015,
+      "hsv_s": 0.5,
+      "hsv_v": 0.3,
+      "degrees": 10.0,
+      "translate": 0.1,
+      "scale": 0.2,
+      "flipud": 0.0,
+      "fliplr": 0.5,
+      "mosaic": 0.0,
+      "synthetic_gan_artifacts": "STRICTLY_PROHIBITED"
+    }
+  },
+  "dataset_lineage": [
+    {
+      "dataset_name": "Novel Pigeonpea Leaf Dataset (PPLD)",
+      "doi": "10.17632/bd553pdtny.1",
+      "archive": "PPLD.zip",
+      "sha256": "ddbcf4102b5ecf1ca6082c29471d21794a10dc2a30c0d0235070824b9f89b45c",
+      "total_images": 973,
+      "deduplicated_images": 915,
+      "classes": ["Healthy", "Leaf_Spot", "Leaf_webber", "Sterilic_mosaic"],
+      "split": {
+        "train_70_pct": 641,
+        "val_15_pct": 138,
+        "golden_test_15_pct": 136
+      }
+    },
+    {
+      "dataset_name": "Cotton-Pune Tabular Dataset",
+      "doi": "10.17632/533j2mzd4s.1",
+      "records": 82,
+      "modality": "tabular_ipm_rules",
+      "purpose": "Deterministic CIBRC treatment rule derivation"
+    }
+  ]
+}

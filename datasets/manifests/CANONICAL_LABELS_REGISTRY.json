@@ -1,0 +1,238 @@
+{
+  "version": "1.0.0",
+  "description": "FALCON-AI Master Canonical Agricultural Label Registry for Maharashtra SIH26131",
+  "updated_at": "2026-09-09T11:27:00+05:30",
+  "labels": [
+    {
+      "canonical_id": "CAN_001",
+      "canonical_name": "cotton_bacterial_blight",
+      "crop": "cotton",
+      "type": "disease",
+      "causal_agent": "Xanthomonas citri pv. malvacearum",
+      "synonyms": [
+        "Bacterial Blight",
+        "Angular Leaf Spot",
+        "Black Arm"
+      ],
+      "source_classes": [
+        "Data.csv:Bacterial Blight"
+      ],
+      "verification_status": "AUTHENTICATED_ICAR_CICR"
+    },
+    {
+      "canonical_id": "CAN_002",
+      "canonical_name": "cotton_grey_mildew",
+      "crop": "cotton",
+      "type": "disease",
+      "causal_agent": "Ramularia areola",
+      "synonyms": [
+        "Grey Mildew",
+        "Dahiya",
+        "Areolate Mildew"
+      ],
+      "source_classes": [
+        "Data.csv:Powdery Mildew"
+      ],
+      "verification_status": "AUTHENTICATED_MPKV"
+    },
+    {
+      "canonical_id": "CAN_003",
+      "canonical_name": "cotton_pink_bollworm_damage",
+      "crop": "cotton",
+      "type": "damage",
+      "causal_agent": "Pectinophora gossypiella",
+      "synonyms": [
+        "Pink Bollworm",
+        "Rosette Flower",
+        "Boll Entrance Hole"
+      ],
+      "source_classes": [
+        "Data.csv:Cotton Boll Rot"
+      ],
+      "verification_status": "AUTHENTICATED_CICR_NAGPUR"
+    },
+    {
+      "canonical_id": "CAN_004",
+      "canonical_name": "cotton_hopper_burn",
+      "crop": "cotton",
+      "type": "damage",
+      "causal_agent": "Amrasca biguttula",
+      "synonyms": [
+        "Jassids",
+        "Leaf Hopper Jassids",
+        "Hopperburn"
+      ],
+      "source_classes": [
+        "Data.csv:Leaf Hopper Jassids"
+      ],
+      "verification_status": "AUTHENTICATED_VNMKV"
+    },
+    {
+      "canonical_id": "CAN_005",
+      "canonical_name": "cotton_leaf_reddening",
+      "crop": "cotton",
+      "type": "damage",
+      "causal_agent": "Physiological (Magnesium/Nitrogen deficiency, chilling)",
+      "synonyms": [
+        "Lalya",
+        "Leaf Redding",
+        "Reddening"
+      ],
+      "source_classes": [
+        "Data.csv:Leaf Redding"
+      ],
+      "verification_status": "AUTHENTICATED_PDKV_AKOLA"
+    },
+    {
+      "canonical_id": "CAN_006",
+      "canonical_name": "tur_sterility_mosaic",
+      "crop": "tur",
+      "type": "disease",
+      "causal_agent": "Pigeonpea sterility mosaic virus (Eriophyid mite vector)",
+      "synonyms": [
+        "Sterilic Mosaic",
+        "Sterility Mosaic",
+        "Green Plague"
+      ],
+      "source_classes": [
+        "NovelPigeonpea:Sterilic Mosaic"
+      ],
+      "verification_status": "AUTHENTICATED_ICRISAT"
+    },
+    {
+      "canonical_id": "CAN_007",
+      "canonical_name": "tur_cercospora_leaf_spot",
+      "crop": "tur",
+      "type": "disease",
+      "causal_agent": "Cercospora cajani",
+      "synonyms": [
+        "Cercospora Leaf Spot",
+        "Cercospora Blight"
+      ],
+      "source_classes": [
+        "NovelPigeonpea:Cercospora Leaf Spot"
+      ],
+      "verification_status": "AUTHENTICATED_UAS_VIJAYAPUR"
+    },
+    {
+      "canonical_id": "CAN_008",
+      "canonical_name": "tur_leaf_webber_damage",
+      "crop": "tur",
+      "type": "damage",
+      "causal_agent": "Grapholita critica",
+      "synonyms": [
+        "Leaf Webber",
+        "Leaf Roller"
+      ],
+      "source_classes": [
+        "NovelPigeonpea:Leaf Webber"
+      ],
+      "verification_status": "AUTHENTICATED_ICRISAT"
+    },
+    {
+      "canonical_id": "CAN_009",
+      "canonical_name": "tur_healthy_leaf",
+      "crop": "tur",
+      "type": "healthy",
+      "causal_agent": "None",
+      "synonyms": [
+        "Healthy",
+        "Normal Leaf"
+      ],
+      "source_classes": [
+        "NovelPigeonpea:Healthy"
+      ],
+      "verification_status": "AUTHENTICATED"
+    },
+    {
+      "canonical_id": "CAN_010",
+      "canonical_name": "soybean_rust",
+      "crop": "soybean",
+      "type": "disease",
+      "causal_agent": "Phakopsora pachyrhizi",
+      "synonyms": [
+        "Soybean Rust",
+        "Asian Soybean Rust"
+      ],
+      "source_classes": [
+        "SoybeanMH:Soybean Rust"
+      ],
+      "verification_status": "AUTHENTICATED_IISR_INDORE"
+    },
+    {
+      "canonical_id": "CAN_011",
+      "canonical_name": "soybean_bacterial_pustule",
+      "crop": "soybean",
+      "type": "disease",
+      "causal_agent": "Xanthomonas axonopodis pv. glycines",
+      "synonyms": [
+        "Bacterial Blight",
+        "Bacterial Pustule"
+      ],
+      "source_classes": [
+        "SoybeanMH:Bacterial Blight"
+      ],
+      "verification_status": "AUTHENTICATED_IISR"
+    },
+    {
+      "canonical_id": "CAN_012",
+      "canonical_name": "soybean_sudden_death_syndrome",
+      "crop": "soybean",
+      "type": "disease",
+      "causal_agent": "Fusarium virguliforme",
+      "synonyms": [
+        "Sudden Death Syndrome",
+        "SDS"
+      ],
+      "source_classes": [
+        "SoybeanMH:Sudden Death Syndrome (SDS)"
+      ],
+      "verification_status": "AUTHENTICATED"
+    },
+    {
+      "canonical_id": "CAN_013",
+      "canonical_name": "onion_purple_blotch",
+      "crop": "onion",
+      "type": "disease",
+      "causal_agent": "Alternaria porri",
+      "synonyms": [
+        "Purple Blotch",
+        "Alternaria Blotch"
+      ],
+      "source_classes": [
+        "OnionMendeley:Purple Blotch"
+      ],
+      "verification_status": "AUTHENTICATED_DOGR_PUNE"
+    },
+    {
+      "canonical_id": "CAN_014",
+      "canonical_name": "beneficial_lady_beetle",
+      "crop": "multi_crop",
+      "type": "beneficial_insect",
+      "causal_agent": "Coccinellidae family",
+      "synonyms": [
+        "Lady Beetle",
+        "Ladybird"
+      ],
+      "source_classes": [
+        "CottonPestBD:Lady Beetle"
+      ],
+      "verification_status": "AUTHENTICATED_BIOCONTROL_PREDATOR"
+    },
+    {
+      "canonical_id": "CAN_015",
+      "canonical_name": "beneficial_green_lacewing",
+      "crop": "multi_crop",
+      "type": "beneficial_insect",
+      "causal_agent": "Chrysoperla carnea",
+      "synonyms": [
+        "Green Lacewings",
+        "Chrysopid"
+      ],
+      "source_classes": [
+        "CottonPestBD:Green Lacewings"
+      ],
+      "verification_status": "AUTHENTICATED_BIOCONTROL_PREDATOR"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-09-09T11:27:00+05:30",
+  "mappings": [
+    {
+      "source_dataset": "Cotton-Pune-Tabular",
+      "source_string": "Bacterial Blight",
+      "proposed_canonical": "cotton_bacterial_blight",
+      "crop": "cotton",
+      "type": "disease",
+      "action": "ACCEPTED_FOR_KB",
+      "notes": "Maps to Xanthomonas citri pv. malvacearum"
+    },
+    {
+      "source_dataset": "Novel-Pigeonpea-Karnataka",
+      "source_string": "Sterilic Mosaic",
+      "proposed_canonical": "tur_sterility_mosaic",
+      "crop": "tur",
+      "type": "disease",
+      "action": "MAP_CANONICAL",
+      "notes": "Corrects author spelling 'Sterilic' to standard ICAR terminology 'Sterility Mosaic'"
+    },
+    {
+      "source_dataset": "Novel-Pigeonpea-Karnataka",
+      "source_string": "Leaf Webber",
+      "proposed_canonical": "tur_leaf_webber_damage",
+      "crop": "tur",
+      "type": "damage",
+      "action": "MAP_CANONICAL",
+      "notes": "Classifies as feeding damage caused by Grapholita critica"
+    },
+    {
+      "source_dataset": "CottonPest-BD",
+      "source_string": "Lady Beetle",
+      "proposed_canonical": "beneficial_lady_beetle",
+      "crop": "cotton",
+      "type": "beneficial_insect",
+      "action": "SEGREGATE_FROM_PESTS",
+      "notes": "CRITICAL: Segregate from pest classes. Model must NOT classify biocontrol predator as a pest."
+    },
+    {
+      "source_dataset": "CottonPest-BD",
+      "source_string": "Green Lacewings",
+      "proposed_canonical": "beneficial_green_lacewing",
+      "crop": "cotton",
+      "type": "beneficial_insect",
+      "action": "SEGREGATE_FROM_PESTS",
+      "notes": "CRITICAL: Natural predator of aphids/bollworm eggs. Must NOT trigger pesticide advisory."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0.0",
+  "created_at": "2026-09-09T11:37:00+05:30",
+  "phase": "4C Dataset Preparation",
+  "purpose": "Proposed training-label deduplication mapping for baseline 116-class YOLO model",
+  "status": "PROPOSAL_ONLY_UNAPPLIED",
+  "production_safety_guarantee": {
+    "taxonomy_py_modified": false,
+    "models_weights_modified": false,
+    "active_baseline_classes": 116,
+    "consolidated_target_classes": 111
+  },
+  "duplicate_mappings": [
+    {
+      "pair_id": "DEDUP_001",
+      "canonical_label": "corn_rust",
+      "display_name": "Corn Common Rust",
+      "pathogen_scientific_name": "Puccinia sorghi",
+      "crop": "Corn / Maize",
+      "pathology_category": "Fungal Disease",
+      "source_classes": [
+        {
+          "baseline_model_id": 0,
+          "exact_string": "corn rust",
+          "provenance_source": "PlantDoc / Roboflow 89-class split"
+        },
+        {
+          "baseline_model_id": 109,
+          "exact_string": "Corn rust leaf",
+          "provenance_source": "Roboflow Corn Foliar Disease dataset"
+        }
+      ],
+      "proposed_unified_training_id": 0,
+      "deduplication_rationale": "Both classes represent Puccinia sorghi foliar rust on Zea mays leaves. Retaining two distinct classes forces the model to split gradient updates between synonymous concepts, artificially reducing mAP."
+    },
+    {
+      "pair_id": "DEDUP_002",
+      "canonical_label": "corn_gray_leaf_spot",
+      "display_name": "Corn Gray Leaf Spot",
+      "pathogen_scientific_name": "Cercospora zeae-maydis",
+      "crop": "Corn / Maize",
+      "pathology_category": "Fungal Disease",
+      "source_classes": [
+        {
+          "baseline_model_id": 25,
+          "exact_string": "corn gray leaf spot",
+          "provenance_source": "PlantDoc / Roboflow 89-class split"
+        },
+        {
+          "baseline_model_id": 97,
+          "exact_string": "Corn Gray leaf spot",
+          "provenance_source": "Roboflow Corn Foliar Disease dataset"
+        }
+      ],
+      "proposed_unified_training_id": 25,
+      "deduplication_rationale": "Identical rectangular gray-to-tan fungal lesions along leaf veins caused by Cercospora zeae-maydis."
+    },
+    {
+      "pair_id": "DEDUP_003",
+      "canonical_label": "corn_smut",
+      "display_name": "Corn Common Smut",
+      "pathogen_scientific_name": "Ustilago maydis",
+      "crop": "Corn / Maize",
+      "pathology_category": "Fungal Disease",
+      "source_classes": [
+        {
+          "baseline_model_id": 82,
+          "exact_string": "corn smut",
+          "provenance_source": "PlantDoc / Roboflow 89-class split"
+        },
+        {
+          "baseline_model_id": 102,
+          "exact_string": "Corn Smut",
+          "provenance_source": "Roboflow Corn Foliar Disease dataset"
+        }
+      ],
+      "proposed_unified_training_id": 82,
+      "deduplication_rationale": "Identical gall-forming fungal pathology caused by Ustilago maydis on ears, tassels, and leaves."
+    },
+    {
+      "pair_id": "DEDUP_004",
+      "canonical_label": "tomato_mosaic_virus",
+      "display_name": "Tomato Mosaic Virus",
+      "pathogen_scientific_name": "Tomato mosaic virus (ToMV)",
+      "crop": "Tomato",
+      "pathology_category": "Viral Disease",
+      "source_classes": [
+        {
+          "baseline_model_id": 69,
+          "exact_string": "tomato mosaic virus",
+          "provenance_source": "PlantDoc / Roboflow 89-class split"
+        },
+        {
+          "baseline_model_id": 114,
+          "exact_string": "Tomato leaf mosaic virus",
+          "provenance_source": "Kaggle / PlantVillage Tomato Foliar subset"
+        }
+      ],
+      "proposed_unified_training_id": 69,
+      "deduplication_rationale": "Identical viral foliar mottling, distortion, and fern-leaf symptoms on Solanum lycopersicum."
+    },
+    {
+      "pair_id": "DEDUP_005",
+      "canonical_label": "tomato_yellow_leaf_curl_virus",
+      "display_name": "Tomato Yellow Leaf Curl Virus",
+      "pathogen_scientific_name": "Tomato yellow leaf curl virus (TYLCV)",
+      "crop": "Tomato",
+      "pathology_category": "Viral Disease",
+      "source_classes": [
+        {
+          "baseline_model_id": 88,
+          "exact_string": "tomato yellow leaf curl virus",
+          "provenance_source": "PlantDoc / Roboflow 89-class split"
+        },
+        {
+          "baseline_model_id": 115,
+          "exact_string": "Tomato leaf yellow virus",
+          "provenance_source": "Kaggle / PlantVillage Tomato Foliar subset"
+        }
+      ],
+      "proposed_unified_training_id": 88,
+      "deduplication_rationale": "Identical whitefly-transmitted begomovirus inducing severe upward cupping and interveinal yellowing of leaflets."
+    }
+  ]
+}

@@ -1,0 +1,1009 @@
+{
+  "model": "Models/PlantDiseaseDetection.pt",
+  "model_size_bytes": 457175703,
+  "classes_count": 116,
+  "load_time_seconds": 0.271,
+  "memory_mb": 576.2,
+  "hardware": {
+    "device": "CPU (Intel Core multi-core)",
+    "logical_cores": 20,
+    "physical_cores": 14,
+    "ram_gb": 23.71
+  },
+  "golden_test_count": 141,
+  "latency_metrics_ms": {
+    "average": 607.4,
+    "steady_state": 597.9,
+    "min": 542.1,
+    "max": 1803.2
+  },
+  "predictions": [
+    {
+      "image": "field_specimens\\cotton_bacterial_blight_kowsik.jpeg",
+      "ground_truth_category": "field_specimens",
+      "predicted_class": "apple leaf",
+      "confidence": 0.3247,
+      "latency_ms": 1803.2
+    },
+    {
+      "image": "field_specimens\\maize_fall_armyworm_image.jpeg",
+      "ground_truth_category": "field_specimens",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 645.3
+    },
+    {
+      "image": "field_specimens\\multi_crop_healthy_ganii-2.jpeg",
+      "ground_truth_category": "field_specimens",
+      "predicted_class": "apple rust",
+      "confidence": 0.4548,
+      "latency_ms": 637.6
+    },
+    {
+      "image": "field_specimens\\out_of_distribution_unknown_ajay.jpeg",
+      "ground_truth_category": "field_specimens",
+      "predicted_class": "carrot cavity spot",
+      "confidence": 0.7343,
+      "latency_ms": 644.2
+    },
+    {
+      "image": "field_specimens\\tomato_late_blight_immanuel.jpeg",
+      "ground_truth_category": "field_specimens",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 597.2
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (100).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "plum leaf",
+      "confidence": 0.4116,
+      "latency_ms": 672.2
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (101).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "blueberry leaf",
+      "confidence": 0.3457,
+      "latency_ms": 694.8
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (103).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "plum leaf",
+      "confidence": 0.4233,
+      "latency_ms": 684.0
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (11).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "blueberry leaf",
+      "confidence": 0.4775,
+      "latency_ms": 582.6
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (110).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "plum leaf",
+      "confidence": 0.5214,
+      "latency_ms": 593.1
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (112).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.3958,
+      "latency_ms": 553.9
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (126).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.6543,
+      "latency_ms": 575.1
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (131).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.3754,
+      "latency_ms": 596.7
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (132).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 600.7
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (137).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.7847,
+      "latency_ms": 573.6
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (139).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.447,
+      "latency_ms": 601.7
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (147).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.5106,
+      "latency_ms": 616.4
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (157).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.5533,
+      "latency_ms": 597.7
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (161).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.7585,
+      "latency_ms": 569.9
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (165).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "plum leaf",
+      "confidence": 0.3612,
+      "latency_ms": 596.6
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (17).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.3989,
+      "latency_ms": 589.8
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (170).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.4228,
+      "latency_ms": 584.4
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (192).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "bean leaf",
+      "confidence": 0.814,
+      "latency_ms": 594.2
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (32).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.5716,
+      "latency_ms": 583.8
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (35).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.7932,
+      "latency_ms": 602.4
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (42).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.3696,
+      "latency_ms": 564.7
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (5).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.267,
+      "latency_ms": 586.2
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (56).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "apple leaf",
+      "confidence": 0.4503,
+      "latency_ms": 565.8
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (65).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "plum leaf",
+      "confidence": 0.3924,
+      "latency_ms": 545.3
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (69).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.6184,
+      "latency_ms": 609.2
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (74).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.7161,
+      "latency_ms": 574.8
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (80).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "bean leaf",
+      "confidence": 0.7892,
+      "latency_ms": 578.8
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (89).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.9545,
+      "latency_ms": 608.8
+    },
+    {
+      "image": "pigeonpea\\healthy\\images (99).jpg",
+      "ground_truth_category": "healthy",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.3432,
+      "latency_ms": 569.3
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (104).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "basil downy mildew",
+      "confidence": 0.3714,
+      "latency_ms": 577.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (106).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "bean rust",
+      "confidence": 0.4504,
+      "latency_ms": 569.4
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (120).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.7138,
+      "latency_ms": 589.2
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (130).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "bean rust",
+      "confidence": 0.2685,
+      "latency_ms": 593.7
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (132).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.4651,
+      "latency_ms": 617.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (138).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 606.5
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (145).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 565.4
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (150).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "coffee leaf rust",
+      "confidence": 0.3821,
+      "latency_ms": 586.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (152).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "coffee leaf rust",
+      "confidence": 0.3202,
+      "latency_ms": 581.8
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (17).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.5018,
+      "latency_ms": 602.6
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (177).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.8367,
+      "latency_ms": 595.3
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (182).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.2594,
+      "latency_ms": 583.8
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (185).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.495,
+      "latency_ms": 585.6
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (194).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.5355,
+      "latency_ms": 567.8
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (200).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.9725,
+      "latency_ms": 572.4
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (201).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.3161,
+      "latency_ms": 588.7
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (206).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "bean halo blight",
+      "confidence": 0.7215,
+      "latency_ms": 570.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (217).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry leaf",
+      "confidence": 0.263,
+      "latency_ms": 579.6
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (22).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "tomato septoria leaf spot",
+      "confidence": 0.5845,
+      "latency_ms": 586.1
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (221).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 575.5
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (235).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry leaf",
+      "confidence": 0.3002,
+      "latency_ms": 597.8
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (237).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 607.2
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (238).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "bell pepper leaf spot",
+      "confidence": 0.4111,
+      "latency_ms": 589.6
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (239).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "basil downy mildew",
+      "confidence": 0.3349,
+      "latency_ms": 591.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (24).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.3318,
+      "latency_ms": 570.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (252).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.2671,
+      "latency_ms": 586.1
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (261).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.2679,
+      "latency_ms": 585.3
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (263).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "plum leaf",
+      "confidence": 0.3489,
+      "latency_ms": 573.0
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (27).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 593.7
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (273).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 564.0
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (276).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.6347,
+      "latency_ms": 591.4
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (279).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.3581,
+      "latency_ms": 575.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (281).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "basil downy mildew",
+      "confidence": 0.829,
+      "latency_ms": 599.8
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (292).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus canker",
+      "confidence": 0.6384,
+      "latency_ms": 583.4
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (293).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus canker",
+      "confidence": 0.393,
+      "latency_ms": 607.1
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (303).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 580.1
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (308).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus canker",
+      "confidence": 0.7054,
+      "latency_ms": 600.5
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (310).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "plum leaf",
+      "confidence": 0.4981,
+      "latency_ms": 583.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (313).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.379,
+      "latency_ms": 558.4
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (320).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 565.0
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (325).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.7312,
+      "latency_ms": 590.1
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (332).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.4542,
+      "latency_ms": 585.1
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (334).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.3377,
+      "latency_ms": 555.4
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (35).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "bean halo blight",
+      "confidence": 0.4923,
+      "latency_ms": 575.0
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (49).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.3579,
+      "latency_ms": 562.5
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (52).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.4183,
+      "latency_ms": 585.9
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (66).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus canker",
+      "confidence": 0.3586,
+      "latency_ms": 582.3
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (67).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 601.5
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (85).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.3915,
+      "latency_ms": 577.0
+    },
+    {
+      "image": "pigeonpea\\leaf_spot\\images (99).jpg",
+      "ground_truth_category": "leaf_spot",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.4009,
+      "latency_ms": 542.1
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (10).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "eggplant leaf",
+      "confidence": 0.6082,
+      "latency_ms": 585.6
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (100).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 566.2
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (105).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "apple leaf",
+      "confidence": 0.5935,
+      "latency_ms": 585.6
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (108).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "eggplant leaf",
+      "confidence": 0.626,
+      "latency_ms": 663.8
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (113).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.4707,
+      "latency_ms": 686.0
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (116).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.3155,
+      "latency_ms": 619.6
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (12).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "apple leaf",
+      "confidence": 0.484,
+      "latency_ms": 609.4
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (124).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.5704,
+      "latency_ms": 687.4
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (129).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.2586,
+      "latency_ms": 639.3
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (132).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "eggplant leaf",
+      "confidence": 0.5955,
+      "latency_ms": 605.3
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (137).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "eggplant leaf",
+      "confidence": 0.2733,
+      "latency_ms": 596.0
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (141).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "bean halo blight",
+      "confidence": 0.4619,
+      "latency_ms": 607.5
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (143).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.7818,
+      "latency_ms": 601.9
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (145).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "plum leaf",
+      "confidence": 0.3169,
+      "latency_ms": 620.9
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (49).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "eggplant leaf",
+      "confidence": 0.4444,
+      "latency_ms": 632.5
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (51).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "eggplant leaf",
+      "confidence": 0.3767,
+      "latency_ms": 582.6
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (69).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "eggplant leaf",
+      "confidence": 0.402,
+      "latency_ms": 599.9
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (70).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 586.6
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (83).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "bean leaf",
+      "confidence": 0.5233,
+      "latency_ms": 583.8
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (85).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.6248,
+      "latency_ms": 596.3
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (87).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.4937,
+      "latency_ms": 614.0
+    },
+    {
+      "image": "pigeonpea\\leaf_webber\\images (89).jpg",
+      "ground_truth_category": "leaf_webber",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 576.3
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(106).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.8658,
+      "latency_ms": 600.8
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(107).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.4559,
+      "latency_ms": 609.3
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(112).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.9101,
+      "latency_ms": 596.0
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(113).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.6864,
+      "latency_ms": 606.2
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(121).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "citrus canker",
+      "confidence": 0.3019,
+      "latency_ms": 613.6
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(131).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "plum leaf",
+      "confidence": 0.5182,
+      "latency_ms": 576.7
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(135).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "blueberry rust",
+      "confidence": 0.2927,
+      "latency_ms": 602.4
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(148).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "plum leaf",
+      "confidence": 0.3924,
+      "latency_ms": 590.0
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(156).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.7076,
+      "latency_ms": 602.9
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(182).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean rust",
+      "confidence": 0.7335,
+      "latency_ms": 610.1
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(189).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.5403,
+      "latency_ms": 594.3
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(19).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "None",
+      "confidence": 0.0,
+      "latency_ms": 603.3
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(192).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.4828,
+      "latency_ms": 593.7
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(2).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.4303,
+      "latency_ms": 607.9
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(233).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.4731,
+      "latency_ms": 596.1
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(250).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.67,
+      "latency_ms": 571.9
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(251).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "citrus greening disease",
+      "confidence": 0.6283,
+      "latency_ms": 589.3
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(259).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.7288,
+      "latency_ms": 716.2
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(263).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "apple mosaic virus",
+      "confidence": 0.6936,
+      "latency_ms": 681.1
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(266).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.3205,
+      "latency_ms": 704.9
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(27).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.8739,
+      "latency_ms": 693.8
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(278).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean halo blight",
+      "confidence": 0.6347,
+      "latency_ms": 658.9
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(284).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.7381,
+      "latency_ms": 673.4
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(291).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bell pepper leaf",
+      "confidence": 0.2598,
+      "latency_ms": 682.8
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(32).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.6388,
+      "latency_ms": 585.4
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(36).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean leaf",
+      "confidence": 0.4195,
+      "latency_ms": 597.5
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(46).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean rust",
+      "confidence": 0.577,
+      "latency_ms": 602.9
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(49).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.5646,
+      "latency_ms": 584.6
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(52).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.7342,
+      "latency_ms": 567.2
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(57).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.7233,
+      "latency_ms": 585.0
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(7).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.7157,
+      "latency_ms": 609.3
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(72).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.7563,
+      "latency_ms": 561.7
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(76).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "soybean leaf",
+      "confidence": 0.3611,
+      "latency_ms": 588.2
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(9).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.5706,
+      "latency_ms": 593.6
+    },
+    {
+      "image": "pigeonpea\\sterilic_mosaic\\images(90).jpg",
+      "ground_truth_category": "sterilic_mosaic",
+      "predicted_class": "bean mosaic virus",
+      "confidence": 0.4771,
+      "latency_ms": 586.8
+    }
+  ]
+}

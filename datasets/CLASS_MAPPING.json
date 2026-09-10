@@ -1,0 +1,139 @@
+{
+  "schema_version": "2.0.0",
+  "updated_at": "2026-09-09T13:09:00+05:30",
+  "baseline_total_classes": 116,
+  "baseline_deduplication_rules": [
+    {
+      "from_indices": [
+        0,
+        109
+      ],
+      "raw_labels": [
+        "corn rust",
+        "Corn rust leaf"
+      ],
+      "canonical_target": "corn_rust"
+    },
+    {
+      "from_indices": [
+        25,
+        97
+      ],
+      "raw_labels": [
+        "corn gray leaf spot",
+        "Corn Gray leaf spot"
+      ],
+      "canonical_target": "corn_gray_leaf_spot"
+    },
+    {
+      "from_indices": [
+        82,
+        102
+      ],
+      "raw_labels": [
+        "corn smut",
+        "Corn Smut"
+      ],
+      "canonical_target": "corn_smut"
+    },
+    {
+      "from_indices": [
+        69,
+        114
+      ],
+      "raw_labels": [
+        "tomato mosaic virus",
+        "Tomato leaf mosaic virus"
+      ],
+      "canonical_target": "tomato_mosaic_virus"
+    },
+    {
+      "from_indices": [
+        88,
+        115
+      ],
+      "raw_labels": [
+        "tomato yellow leaf curl virus",
+        "Tomato leaf yellow virus"
+      ],
+      "canonical_target": "tomato_yellow_leaf_curl_virus"
+    }
+  ],
+  "maharashtra_extension_classes": [
+    {
+      "target_class": "cotton_bacterial_blight",
+      "crop": "cotton",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "cotton_grey_mildew",
+      "crop": "cotton",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "cotton_pink_bollworm_damage",
+      "crop": "cotton",
+      "category": "PEST_DAMAGE"
+    },
+    {
+      "target_class": "cotton_leaf_reddening_lalya",
+      "crop": "cotton",
+      "category": "DAMAGE_ABIOTIC"
+    },
+    {
+      "target_class": "tur_sterility_mosaic",
+      "crop": "pigeonpea",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "tur_cercospora_leaf_spot",
+      "crop": "pigeonpea",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "tur_leaf_webber_damage",
+      "crop": "pigeonpea",
+      "category": "PEST_DAMAGE"
+    },
+    {
+      "target_class": "tur_healthy_leaf",
+      "crop": "pigeonpea",
+      "category": "HEALTHY"
+    },
+    {
+      "target_class": "soybean_rust",
+      "crop": "soybean",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "soybean_bacterial_pustule",
+      "crop": "soybean",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "soybean_sudden_death_syndrome",
+      "crop": "soybean",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "onion_purple_blotch",
+      "crop": "onion",
+      "category": "DISEASE"
+    },
+    {
+      "target_class": "beneficial_lady_beetle",
+      "crop": "multi",
+      "category": "BENEFICIAL_ORGANISM"
+    },
+    {
+      "target_class": "beneficial_green_lacewing",
+      "crop": "multi",
+      "category": "BENEFICIAL_ORGANISM"
+    },
+    {
+      "target_class": "beneficial_hoverfly",
+      "crop": "multi",
+      "category": "BENEFICIAL_ORGANISM"
+    }
+  ]
+}

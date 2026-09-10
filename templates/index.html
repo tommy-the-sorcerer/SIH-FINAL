@@ -3,46 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FALCON-AI | Crop Health Advisory</title>
-    <link rel="icon" type="image/svg+xml" href="/static/images/falcon-logo.svg?v={{ v if v else '1.0' }}">
-    <link rel="apple-touch-icon" href="/static/images/falcon-logo.svg?v={{ v if v else '1.0' }}">
+    <title>FALCON-AI | Crop Health Advisory Platform · SIH26131</title>
+    <link rel="icon" type="image/svg+xml" href="/static/images/falcon-logo.svg?v={{ v if v else '2.4' }}">
 
     <!-- Google Fonts & Font Awesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Dynamic Cache-Busted CSS Link -->
-    <link rel="stylesheet" href="/static/css/style.css?v={{ v if v else '1.0' }}">
+    <!-- Leaflet GIS Mapping CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,te,kn,ta,ml,hi',
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- Application Theme & Styling -->
+    <link rel="stylesheet" href="/static/css/style.css?v={{ v if v else '2.4' }}">
 </head>
-<body class="dark-theme">
-
-    <div id="google_translate_element" style="display:none;"></div>
+<body>
 
     <!-- TOAST NOTIFICATION -->
-    <div id="toast-notification">Copied to clipboard!</div>
-
-    <!-- DP VIEWER MODAL -->
-    <div id="dp-modal" onclick="closeDpModal()">
-        <div class="dp-modal-content" onclick="event.stopPropagation()">
-            <button class="close-dp-btn" onclick="closeDpModal()">&times;</button>
-            <div class="dp-frame">
-                <img id="dp-modal-img" src="" alt="Profile Picture">
-            </div>
-            <h3 id="dp-modal-name">Member Name</h3>
-        </div>
-    </div>
+    <div id="toast-notification">Notification</div>
 
     <!-- PRELOADER -->
     <div id="site-preloader">
@@ -50,293 +27,1772 @@
         <div class="loader-bar-container">
             <div class="loader-bar-fill" id="preloader-fill"></div>
         </div>
-        <div class="loader-text" id="preloader-text">INITIALIZING FALCON-AI... 0%</div>
+        <div class="loader-text" id="preloader-text">INITIALIZING FALCON-AI DECISION PLATFORM... 0%</div>
     </div>
 
-    <!-- FARMER REGISTRATION MODAL (Flawless Form Submission) -->
-    <div id="login-modal" class="custom-modal show-modal">
-        <div class="modal-card">
-            <div class="modal-icon"><i class="fa-solid fa-wheat-awn"></i></div>
-            <h2>Farmer registration</h2>
-            <p>Enter your details to access the FALCON-AI crop health advisory service.</p>
+    <!-- APP SHELL: FIXED SIDEBAR + WORKSPACE -->
+    <div class="app-layout">
 
-            <!-- FIX 1: Guaranteed preventDefault inside the HTML tag -->
-            <form class="registration-fields" onsubmit="event.preventDefault(); submitFarmerRegistration(event);">
-                <div class="input-group">
-                    <label for="farmer-name"><i class="fa-solid fa-user"></i> Full Name</label>
-                    <input type="text" id="farmer-name" placeholder="e.g. Ramesh Kumar" required autocomplete="off">
-                </div>
-
-                <div class="input-group">
-                    <label for="farmer-phone"><i class="fa-solid fa-phone"></i> Mobile Number</label>
-                    <input type="tel" id="farmer-phone" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required autocomplete="off">
-                </div>
-
-                <button type="submit" class="btn-primary-action">
-                    <span>Continue to Portal</span> <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- LANGUAGE PICKER MODAL -->
-    <div id="lang-picker-modal" class="custom-modal">
-        <div class="modal-card">
-            <div class="modal-icon"><i class="fa-solid fa-language"></i></div>
-            <h2>Select language</h2>
-            <p>Choose your preferred language for the application.</p>
-
-            <div class="lang-grid">
-                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('en')">English</button>
-                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('te')">తెలుగు (Telugu)</button>
-                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('kn')">ಕನ್ನಡ (Kannada)</button>
-                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('ta')">தமிழ் (Tamil)</button>
-                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('ml')">മലയാളം (Malayalam)</button>
-                <button type="button" class="lang-option-btn" onclick="switchLanguageViaApi('hi')">हिन्दी (Hindi)</button>
-            </div>
-
-            <button type="button" class="btn-secondary-action" onclick="closeLangModal()" style="margin-top: 15px;">Close</button>
-        </div>
-    </div>
-
-    <!-- NAVBAR -->
-    <nav>
-        <div class="logo">
-            <img class="site-logo-image" src="/static/images/falcon-logo.svg" alt="FALCON-AI logo">
-            <span class="site-logo-name">FALCON-AI</span>
-        </div>
-        <div class="nav-controls">
-            <button type="button" class="nav-control-btn" id="current-lang-indicator" onclick="openLangModal()">
-                <i class="fa-solid fa-globe"></i> <span id="lang-text">English</span>
-            </button>
-
-        </div>
-    </nav>
-
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <p class="eyebrow">CROP HEALTH ADVISORY SERVICE</p>
-        <h1>Early crop health information for farmers <span>before damage spreads</span></h1>
-        <p>FALCON-AI analyses a crop image, identifies possible disease symptoms, highlights the affected area, and combines optional field readings to suggest the next safe step.</p>
-
-        <!-- UPLOAD CARD -->
-        <div class="upload-card">
-            <i class="fa-solid fa-file-image upload-icon"></i>
-            <h2>Start a crop assessment</h2>
-            <p class="upload-subtext">Use a clear leaf photograph from this computer or capture one with the camera.</p>
-
-            <div class="upload-actions">
-                <button type="button" class="btn-upload" onclick="triggerSmartCamera()">
-                    <i class="fa-solid fa-camera"></i> Open Camera
-                </button>
-                <input type="file" id="file-input-camera" accept="image/*" capture="environment" onchange="handleImageUpload(event)">
-
-                <button type="button" class="btn-upload btn-secondary" onclick="triggerGallery()">
-                    <i class="fa-solid fa-image"></i> Upload from PC
-                </button>
-                <input type="file" id="file-input-gallery" accept="image/*" onchange="handleImageUpload(event)">
-            </div>
-
-            <!-- Image Preview -->
-            <div id="image-drop-zone" class="image-drop-zone" role="button" tabindex="0" onclick="triggerGallery()">
-                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                <span>Drop a crop image here or choose one from this PC</span>
-                <small>JPG, PNG, or WEBP · maximum 15 MB</small>
-            </div>
-            <div id="preview-container">
-                <img id="image-preview" src="" alt="Specimen Preview">
-            </div>
-
-            <div class="sensor-panel">
-                <div class="sensor-panel-heading">
-                    <span><i class="fa-solid fa-microchip"></i> Field context</span>
-                    <small>Optional sensor readings</small>
-                </div>
-                <div class="sensor-grid">
-                    <label>Soil moisture (%)<input type="number" id="soil-moisture" min="0" max="100" placeholder="e.g. 42"></label>
-                    <label>Temperature (&deg;C)<input type="number" id="temperature" min="-10" max="70" placeholder="e.g. 31"></label>
-                    <label>Air humidity (%)<input type="number" id="humidity" min="0" max="100" placeholder="e.g. 62"></label>
-                </div>
-                <div class="sensor-presets" aria-label="Demo sensor presets">
-                    <button type="button" onclick="applySensorPreset('normal')">Normal field</button>
-                    <button type="button" onclick="applySensorPreset('dry')">Dry soil</button>
-                    <button type="button" onclick="applySensorPreset('clear')">Clear sensors</button>
-                </div>
-            </div>
-
-            <!-- SCANNING PROGRESS -->
-            <div class="analysis-progress" id="analysis-progress">
-                <div class="nest-stage-container">
-                    <div class="falcon-nest">🪹</div>
-                    <div class="orbiting-falcon" id="orbiting-falcon">🦅</div>
-                </div>
-
-                <div class="scanner-top-info">
-                    <div class="progress-status">
-                        <span class="status-dot"></span>
-                        <span id="scan-status-text">Preparing image assessment...</span>
+        <!-- =================================================================== -->
+        <!-- FIXED LEFT SIDEBAR -->
+        <!-- =================================================================== -->
+        <aside id="app-sidebar">
+            <div class="sidebar-top-container">
+                <!-- Maharashtra Government Official Branding Header -->
+                <div class="sidebar-header" style="background:rgba(0,0,0,0.15);border-bottom:1px solid rgba(255,215,0,0.25);padding:14px 10px;">
+                    <div class="sidebar-logo-icon" style="width:42px;height:42px;border-radius:50%;background:#ffffff;padding:2px;box-shadow:0 0 10px rgba(255,215,0,0.4);border:1.5px solid #d4af37;">
+                        <img src="/static/images/maharashtra-govt-logo.svg" alt="Maharashtra Govt Rajmudra Emblem" title="Govt of Maharashtra · Department of Agriculture">
                     </div>
-                    <div class="scan-percentage" id="scan-percentage">0%</div>
+                    <div class="sidebar-brand-text">
+                        <span class="sidebar-brand-name" style="font-size:0.95rem;color:#FFE599;letter-spacing:0.03em;">Govt of Maharashtra</span>
+                        <span class="sidebar-brand-sub" style="color:#ffffff;font-size:0.75rem;font-weight:700;">FALCON-AI Agriculture</span>
+                        <small style="color:rgba(255,255,255,0.65);font-size:0.62rem;">Dept. of Agriculture · SIH</small>
+                    </div>
                 </div>
 
-                <div class="scan-bar-bg">
-                    <div class="scan-bar-fill" id="scan-bar-fill"></div>
+                <!-- Navigation Menu (10 Views) -->
+                <nav class="sidebar-nav">
+                    <span class="nav-section-title" data-i18n="nav_main_menu">Main Navigation</span>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item active" id="nav-item-dashboard" onclick="switchView('dashboard')">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span data-i18n="nav_dashboard">Dashboard</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-diagnose" onclick="switchView('diagnose')">
+                        <i class="fa-solid fa-camera-retro"></i>
+                        <span data-i18n="nav_diagnose">Crop Diagnosis</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-fields" onclick="switchView('fields')">
+                        <i class="fa-solid fa-wheat-awn"></i>
+                        <span data-i18n="nav_my_fields">My Farms</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item rbac-officer-expert" id="nav-item-alerts" onclick="switchView('alerts')" style="display:none;">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span data-i18n="nav_pest_alerts">Surveillance Bulletin</span>
+                        <span class="sidebar-badge" id="sidebar-alert-badge">3</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-weather" onclick="switchView('weather')">
+                        <i class="fa-solid fa-cloud-sun-rain"></i>
+                        <span data-i18n="nav_weather_risk">Weather & Risk</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-hotspots" onclick="switchView('hotspots')">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span data-i18n="nav_hotspot_map">Hotspot Map</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-advisory" onclick="switchView('advisory')">
+                        <i class="fa-solid fa-prescription"></i>
+                        <span data-i18n="nav_treatment_advisory">Treatment Advisory</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-sensors" onclick="switchView('sensors')">
+                        <i class="fa-solid fa-microchip"></i>
+                        <span data-i18n="nav_smart_traps">Smart Traps & Sensors</span>
+                    </a>
+
+                    <span class="nav-section-title" data-i18n="nav_officials_section">Expert & Administration</span>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-expert" onclick="switchView('expert')">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <span data-i18n="nav_expert_desk">Agricultural Expert</span>
+                        <span class="sidebar-badge" id="pending-count-badge">0</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="sidebar-nav-item" id="nav-item-officer" onclick="switchView('officer')">
+                        <i class="fa-solid fa-landmark"></i>
+                        <span data-i18n="nav_officer_dashboard">Agriculture Officer</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sih-badge-pill">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>SIH26131</span> · MH Govt
+                </div>
+                <small style="color: rgba(255,255,255,0.4);">v2.4 Enterprise Production</small>
+            </div>
+        </aside>
+
+        <!-- =================================================================== -->
+        <!-- MAIN WRAPPER (TOP HEADER + SCROLLABLE WORKSPACE) -->
+        <!-- =================================================================== -->
+        <div class="main-wrapper">
+
+            <!-- TOP HEADER -->
+            <header id="app-header">
+                <div class="header-left">
+                    <button type="button" class="mobile-menu-toggle" onclick="toggleMobileSidebar()" aria-label="Toggle Sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <!-- Global Search Box -->
+                    <!-- Maharashtra Government Official Title Pill -->
+                    <div class="mh-header-pill" style="display:flex;align-items:center;gap:8px;background:rgba(22,163,74,0.08);border:1px solid rgba(22,163,74,0.25);border-radius:20px;padding:4px 12px;">
+                        <img src="/static/images/maharashtra-govt-logo.svg" alt="MH Seal" style="width:24px;height:24px;border-radius:50%;">
+                        <span style="font-size:0.8rem;font-weight:700;color:#14532d;">Govt of Maharashtra · Department of Agriculture</span>
+                    </div>
+
+                    <div class="header-search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="globalSearchInput" class="global-search-input" placeholder="Search crops, diseases, pests, treatments..." oninput="handleGlobalSearch(this.value)" autocomplete="off">
+                        <!-- Instant Dropdown / Live-filtered Search Results -->
+                        <div id="global-search-results" class="search-dropdown-menu" style="display:none;"></div>
+                    </div>
                 </div>
 
-                <div class="scanner-telemetry">
-                    <span id="telemetry-hash">Image quality checks</span>
-                    <span id="telemetry-frame">Local processing</span>
+                <div class="header-right">
+                    <!-- Voice Assistant Floating Trigger in Header -->
+                    <button type="button" id="voice-agent-header-btn" class="header-icon-btn" onclick="toggleVoiceAssistant()" title="AI Farm Voice Advisory" style="background:#ecfdf5;color:#16a34a;border-color:#86efac;">
+                        <i class="fa-solid fa-microphone-lines"></i>
+                    </button>
+
+                    <!-- Language Switcher Dropdown (Marathi / Hindi / English) -->
+                    <div class="lang-switcher-wrap" style="position:relative;display:inline-block;">
+                        <button type="button" class="header-lang-btn" id="header-lang-toggle" onclick="toggleLanguageDropdown()" style="cursor:pointer;display:flex;align-items:center;gap:6px;">
+                            <i class="fa-solid fa-language" style="color:var(--brand-green);font-size:1.1rem;"></i>
+                            <span id="lang-text">English</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i>
+                        </button>
+                        <div id="lang-dropdown-menu" style="display:none;position:absolute;right:0;top:110%;background:#ffffff;border:1px solid var(--border-card);border-radius:8px;box-shadow:0 8px 16px rgba(0,0,0,0.12);z-index:1100;min-width:130px;overflow:hidden;">
+                            <button type="button" onclick="changeLanguage('mr')" class="lang-opt-btn" style="width:100%;padding:8px 14px;text-align:left;display:flex;align-items:center;gap:8px;font-weight:600;font-size:0.85rem;border-bottom:1px solid #f1f5f9;">
+                                <span>🚩 मराठी (Marathi)</span>
+                            </button>
+                            <button type="button" onclick="changeLanguage('hi')" class="lang-opt-btn" style="width:100%;padding:8px 14px;text-align:left;display:flex;align-items:center;gap:8px;font-weight:600;font-size:0.85rem;border-bottom:1px solid #f1f5f9;">
+                                <span>🇮🇳 हिंदी (Hindi)</span>
+                            </button>
+                            <button type="button" onclick="changeLanguage('en')" class="lang-opt-btn" style="width:100%;padding:8px 14px;text-align:left;display:flex;align-items:center;gap:8px;font-weight:600;font-size:0.85rem;">
+                                <span>🌐 English</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Work History & Activity Logs Button -->
+                    <button type="button" class="header-icon-btn" onclick="openWorkHistoryModal()" title="Work History & Activity Logs" style="background:#f8fafc;color:#475569;">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </button>
+
+                    <!-- Notification Bell Icon -->
+                    <button type="button" class="header-icon-btn" onclick="switchView('alerts')" title="Alerts">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="header-badge-dot"></span>
+                    </button>
+
+                    <!-- Active Profile Badge & Inline Sign Out -->
+                    <div class="header-auth-container" id="header-auth-container">
+                        <div class="header-profile-badge" id="auth-btn" onclick="openAuthModal()" title="Account Profile">
+                            <div class="header-user-avatar">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="header-user-info">
+                                <span class="header-user-name" id="auth-user-name">Sign In / Register</span>
+                                <span class="header-user-role" id="auth-user-role">Guest Farmer</span>
+                            </div>
+                        </div>
+                        <button type="button" id="header-btn-signout" class="header-signout-btn" onclick="userSignOut()" style="display:none;" title="Sign Out">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- =============================================================== -->
+            <!-- WORKSPACE PANELS -->
+            <!-- =============================================================== -->
+            <main id="main-workspace">
+                <!-- =============================================================== -->
+                <!-- 0. FALCON-AI SECURITY & PERSONA GATEWAY BAR (Shown ONLY on unauthenticated landing or explicit role switch) -->
+                <!-- =============================================================== -->
+                <section id="persona-gateway-card" class="card-white" style="display:none;margin-bottom:20px;padding:18px 24px;border:1px solid #e2e8f0;border-radius:12px;background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:16px;">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:42px;height:42px;border-radius:10px;background:var(--brand-green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h2 style="font-size:1.15rem;font-weight:700;color:var(--text-primary);margin:0;">FALCON-AI Role Gateway & Portal Access</h2>
+                                <p style="font-size:0.8rem;color:var(--text-secondary);margin:2px 0 0 0;">Select your role below to log in or register with your credentials for customized agricultural tools.</p>
+                            </div>
+                        </div>
+                        <div id="gateway-active-status" style="display:flex;align-items:center;gap:10px;">
+                            <span id="gateway-user-badge" style="background:#f1f5f9;color:#475569;padding:6px 14px;border-radius:20px;font-size:0.82rem;font-weight:700;border:1px solid #cbd5e1;">
+                                <i class="fa-solid fa-user-circle"></i> <span id="gateway-user-text">Guest Farmer (Not Signed In)</span>
+                            </span>
+                            <button type="button" id="btn-gateway-signout" class="btn-secondary-action" onclick="openAuthModal()" style="padding:6px 14px;font-size:0.8rem;color:#15803d;border-color:#bbf7d0;">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In / Register
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3 Role Portals -->
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;margin-bottom:14px;">
+                        <!-- Agricultural Expert Persona -->
+                        <div class="gateway-role-card" id="gateway-tile-expert" onclick="selectPortalRole('expert')" style="cursor:pointer;padding:12px 16px;border:1px solid #cbd5e1;border-radius:10px;background:#ffffff;display:flex;align-items:center;gap:12px;transition:all 0.2s;">
+                            <div style="width:36px;height:36px;border-radius:50%;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;">
+                                    <strong style="font-size:0.88rem;color:#1e40af;">🔬 Agricultural Expert</strong>
+                                    <span style="font-size:0.7rem;background:#dbeafe;color:#1d4ed8;padding:2px 6px;border-radius:4px;font-weight:600;">Expert Workspace</span>
+                                </div>
+                                <span style="font-size:0.75rem;color:#64748b;">Case Review Desk, Specimen Audit & Prescriptions</span>
+                            </div>
+                        </div>
+
+                        <!-- Agriculture Officer Persona -->
+                        <div class="gateway-role-card" id="gateway-tile-officer" onclick="selectPortalRole('officer')" style="cursor:pointer;padding:12px 16px;border:1px solid #cbd5e1;border-radius:10px;background:#ffffff;display:flex;align-items:center;gap:12px;transition:all 0.2s;">
+                            <div style="width:36px;height:36px;border-radius:50%;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;">
+                                <i class="fa-solid fa-landmark"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;">
+                                    <strong style="font-size:0.88rem;color:#5b21b6;">🏛️ Agriculture Officer</strong>
+                                    <span style="font-size:0.7rem;background:#ede9fe;color:#6d28d9;padding:2px 6px;border-radius:4px;font-weight:600;">Officer Workspace</span>
+                                </div>
+                                <span style="font-size:0.75rem;color:#64748b;">GIS Outbreak Hotspots & Regional Advisories</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Quick Sign-In Form -->
+                    <div id="gateway-login-form" style="display:flex;background:#f8fafc;padding:12px 16px;border-radius:8px;border:1px solid #e2e8f0;margin-top:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:1;">
+                            <input type="text" id="gate-email" placeholder="Enter mobile number or email" style="padding:8px 12px;font-size:0.82rem;min-width:200px;border:1px solid #cbd5e1;border-radius:6px;flex:1;">
+                            <input type="password" id="gate-password" placeholder="Enter password" style="padding:8px 12px;font-size:0.82rem;min-width:160px;border:1px solid #cbd5e1;border-radius:6px;flex:1;">
+                            <button type="button" class="btn-primary-action" onclick="submitGatewayDirectLogin()" style="padding:8px 18px;font-size:0.82rem;">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+                            </button>
+                        </div>
+                        <button type="button" class="btn-secondary-action" onclick="openAuthModal('register')" style="padding:8px 14px;font-size:0.82rem;">
+                            <i class="fa-solid fa-user-plus"></i> Register New User
+                        </button>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 1. FARMER DASHBOARD VIEW -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-dashboard" class="view-panel active-panel">
+                    <!-- Hero Banner Card -->
+                    <div class="dashboard-hero-card">
+                        <div class="hero-art-bg"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="hero-text-content">
+                            <div class="hero-tagline-chip">
+                                <i class="fa-solid fa-leaf"></i> <span data-i18n="hero_eyebrow">HEALTHY CROPS · SUSTAINABLE AGRICULTURE</span>
+                            </div>
+                            <h1 data-i18n="hero_title">Protect Your Crops with AI Detection & Agricultural Expert Advisories</h1>
+                            <p data-i18n="hero_desc">Upload a leaf photograph of your crop. Receive instant AI disease & pest diagnosis, weather-based risk indexing, and verified CIBRC IPM treatment plans.</p>
+                            <div class="hero-actions">
+                                <button type="button" class="btn-hero-white" onclick="switchView('diagnose')">
+                                    <i class="fa-solid fa-camera-retro"></i> <span data-i18n="btn_diagnose_now">Start Diagnosis Now</span>
+                                </button>
+                                <button type="button" class="btn-hero-ghost rbac-officer-expert" id="hero-btn-alerts" onclick="switchView('alerts')" style="display:none;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="btn_view_alerts">Surveillance Bulletin</span>
+                                </button>
+                                <button type="button" class="btn-hero-ghost" onclick="switchView('weather')">
+                                    <i class="fa-solid fa-cloud-sun"></i> <span data-i18n="btn_weather">Weather Telemetry & Spray Suitability</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 KPI Cards Grid -->
+                    <div class="kpi-grid-4">
+                        <div class="kpi-card" onclick="switchView('fields')">
+                            <div class="kpi-icon-wrap green"><i class="fa-solid fa-wheat-awn"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label" data-i18n="kpi_my_fields">My Farms</span>
+                                <span class="kpi-value" id="dash-kpi-fields">3 Farms</span>
+                                <span class="kpi-subtext" id="dash-kpi-fields-sub">12 Acres Cultivated</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card" onclick="switchView('diagnose')">
+                            <div class="kpi-icon-wrap blue"><i class="fa-solid fa-seedling"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label" data-i18n="kpi_main_crop">Main Crops</span>
+                                <span class="kpi-value" id="dash-kpi-crops">Maize · Tomato</span>
+                                <span class="kpi-subtext" id="dash-kpi-crops-sub">Nashik Division · Kharif 2026</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card" onclick="switchView('advisory')">
+                            <div class="kpi-icon-wrap amber"><i class="fa-solid fa-shield-heart"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label" data-i18n="kpi_crop_health">Crop Health Status</span>
+                                <span class="kpi-value" id="dash-kpi-health">88% Healthy</span>
+                                <span class="kpi-subtext" id="dash-kpi-health-sub" style="color: var(--brand-amber);">1 Farm Fall Armyworm Alert</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card" onclick="switchView('weather')">
+                            <div class="kpi-icon-wrap purple"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label" data-i18n="kpi_weather">Local Weather</span>
+                                <span class="kpi-value" id="dash-kpi-temp">28.5° C</span>
+                                <span class="kpi-subtext" id="dash-kpi-temp-sub">Humidity 64% · Rain Chance 10%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard 3-Column Widgets Area -->
+                    <div class="dashboard-triplet-grid">
+                        <!-- 7-Day Disease Risk Forecast SVG Chart -->
+                        <div class="widget-card forecast-chart-card">
+                            <div class="widget-header">
+                                <h3><i class="fa-solid fa-chart-line" style="color: var(--brand-amber);"></i> <span data-i18n="disease_risk_forecast">7-Day Pest & Disease Risk Forecast</span></h3>
+                                <a href="javascript:void(0)" onclick="switchView('weather')" data-i18n="forecast_details">Details →</a>
+                            </div>
+
+                            <div class="chart-legend-row">
+                                <div class="chart-legend-item"><span class="legend-dot green"></span> 0-30 Low Risk</div>
+                                <div class="chart-legend-item"><span class="legend-dot amber"></span> 31-60 Moderate Risk</div>
+                                <div class="chart-legend-item"><span class="legend-dot red"></span> 61-100 High Risk</div>
+                            </div>
+
+                            <div class="forecast-svg-wrapper" id="dashboard-forecast-svg-wrapper">
+                                <!-- SVG Risk Forecast Curve -->
+                                <svg viewBox="0 0 420 160" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="riskGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35"/>
+                                            <stop offset="100%" stop-color="#22c55e" stop-opacity="0.02"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Horizontal Grid Lines -->
+                                    <line x1="0" y1="30" x2="420" y2="30" stroke="#f1f5f9" stroke-dasharray="4"/>
+                                    <line x1="0" y1="80" x2="420" y2="80" stroke="#f1f5f9" stroke-dasharray="4"/>
+                                    <line x1="0" y1="130" x2="420" y2="130" stroke="#f1f5f9" stroke-dasharray="4"/>
+                                    <!-- Area Fill -->
+                                    <path d="M 10 120 Q 70 130 140 85 T 280 65 T 410 40 L 410 155 L 10 155 Z" fill="url(#riskGrad)"/>
+                                    <!-- Trend Line -->
+                                    <path d="M 10 120 Q 70 130 140 85 T 280 65 T 410 40" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>
+                                    <!-- Data Points -->
+                                    <circle cx="10" cy="120" r="4" fill="#16a34a" stroke="#fff" stroke-width="2"/>
+                                    <circle cx="75" cy="125" r="4" fill="#16a34a" stroke="#fff" stroke-width="2"/>
+                                    <circle cx="140" cy="85" r="4" fill="#d97706" stroke="#fff" stroke-width="2"/>
+                                    <circle cx="210" cy="75" r="4" fill="#d97706" stroke="#fff" stroke-width="2"/>
+                                    <circle cx="280" cy="65" r="4" fill="#d97706" stroke="#fff" stroke-width="2"/>
+                                    <circle cx="350" cy="50" r="4" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+                                    <circle cx="410" cy="40" r="5" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+                                </svg>
+                            </div>
+
+                            <div class="forecast-days-row" id="dashboard-forecast-days-row">
+                                <div class="forecast-day-col"><div class="day-name">Mon</div><div class="day-risk-val low">20%</div></div>
+                                <div class="forecast-day-col"><div class="day-name">Tue</div><div class="day-risk-val low">25%</div></div>
+                                <div class="forecast-day-col"><div class="day-name">Wed</div><div class="day-risk-val mod">48%</div></div>
+                                <div class="forecast-day-col"><div class="day-name">Thu</div><div class="day-risk-val mod">55%</div></div>
+                                <div class="forecast-day-col"><div class="day-name">Fri</div><div class="day-risk-val mod">62%</div></div>
+                                <div class="forecast-day-col"><div class="day-name">Sat</div><div class="day-risk-val high">74%</div></div>
+                                <div class="forecast-day-col"><div class="day-name">Sun</div><div class="day-risk-val high">82%</div></div>
+                            </div>
+                        </div>
+
+                        <!-- Column 3: Upcoming Pest Alerts -->
+                        <div class="widget-card">
+                            <div class="widget-header">
+                                <h3><i class="fa-solid fa-bell" style="color: var(--brand-red);"></i> <span data-i18n="pest_outbreak_alerts">Active Pest Outbreak Alerts</span></h3>
+                                <a href="javascript:void(0)" onclick="switchView('alerts')" data-i18n="all_alerts">All Alerts →</a>
+                            </div>
+
+                            <div class="alerts-mini-list" id="dashboard-alerts-mini-list">
+                                <div class="alert-mini-item critical">
+                                    <div class="alert-mini-top">
+                                        <span class="alert-mini-title">Maize: Fall Armyworm Outbreak</span>
+                                        <span class="alert-mini-badge badge-red">Critical Risk</span>
+                                    </div>
+                                    <span class="alert-mini-desc">High humidity favors pest multiplication in Nashik, Ahmednagar, and Pune.</span>
+                                </div>
+
+                                <div class="alert-mini-item">
+                                    <div class="alert-mini-top">
+                                        <span class="alert-mini-title">Cotton: Pink Bollworm (Surveillance)</span>
+                                        <span class="alert-mini-badge badge-amber">Moderate Risk</span>
+                                    </div>
+                                    <span class="alert-mini-desc">Pheromone trap catches increased in Aurangabad and Jalna.</span>
+                                </div>
+
+                                <div class="alert-mini-item">
+                                    <div class="alert-mini-top">
+                                        <span class="alert-mini-title">Soybean: Rust Risk Alert</span>
+                                        <span class="alert-mini-badge badge-amber">Moderate Risk</span>
+                                    </div>
+                                    <span class="alert-mini-desc">Morning fog and overcast weather elevate fungal infection probabilities.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 2. DIAGNOSE CROP VIEW (AI SCANNER & RESULTS) -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-diagnose" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-camera-retro" style="color: var(--brand-green);"></i> <span data-i18n="page_diagnose_title">AI Crop Health Diagnostic Center</span></h2>
+                            <p class="page-subtitle" data-i18n="page_diagnose_subtitle">Upload a clear leaf photograph. In seconds, receive precise model diagnosis, lesion surface damage %, and verified CIBRC IPM advisory.</p>
+                        </div>
+                    </div>
+
+                    <div class="diagnose-layout-grid">
+                        <!-- LEFT COLUMN: INPUT FORM -->
+                        <div class="card-white">
+                            <!-- STEP 1: Crop Selection -->
+                            <div class="section-label">
+                                <span class="step-num" style="background:var(--brand-green);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;">1</span>
+                                <span data-i18n="step1_select_crop">1. Select Crop</span>
+                            </div>
+                            <div class="crop-select-grid" id="crop-selector-container">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+
+                            <!-- STEP 2: Growth Stage (Optional / Auto-Inferred) -->
+                            <div class="section-label" style="display:flex;justify-content:space-between;align-items:center;">
+                                <div>
+                                    <span class="step-num" style="background:var(--brand-green);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;">2</span>
+                                    <span data-i18n="step2_select_stage">2. Crop Growth Stage</span>
+                                    <span style="font-size:0.7rem;color:#16a34a;background:#ecfdf5;padding:2px 8px;border-radius:10px;margin-left:6px;font-weight:700;">Optional (AI Auto-Infers)</span>
+                                </div>
+                            </div>
+                            <div class="stages-row">
+                                <button type="button" class="stage-pill active" data-stage="vegetative" onclick="selectStage('vegetative')">🌱 Auto / Vegetative</button>
+                                <button type="button" class="stage-pill" data-stage="flowering" onclick="selectStage('flowering')">🌸 Flowering</button>
+                                <button type="button" class="stage-pill" data-stage="fruiting" onclick="selectStage('fruiting')">🌾 Fruiting / Pod</button>
+                                <button type="button" class="stage-pill" data-stage="seedling" onclick="selectStage('seedling')">🌿 Seedling</button>
+                                <button type="button" class="stage-pill" data-stage="harvesting" onclick="selectStage('harvesting')">🚜 Maturity</button>
+                            </div>
+
+                            <!-- STEP 3: Location -->
+                            <div class="section-label">
+                                <span class="step-num" style="background:var(--brand-green);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;">3</span>
+                                <span data-i18n="step3_select_location">3. Farm Location (District & Taluka)</span>
+                            </div>
+                            <div class="location-inputs-grid">
+                                <div class="form-group">
+                                    <label data-i18n="label_district">District</label>
+                                    <select id="field-district" onchange="onDistrictChange(this.value)"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="label_taluka">Taluka</label>
+                                    <select id="field-taluka"></select>
+                                </div>
+                            </div>
+                            <div class="location-inputs-grid" style="margin-top: -6px;">
+                                <div class="form-group">
+                                    <label data-i18n="label_village">Village / Locality</label>
+                                    <input type="text" id="field-village" placeholder="e.g. Dindori, Sakri">
+                                </div>
+                                <div class="form-group" style="display:flex;flex-direction:column;justify-content:flex-end;">
+                                    <button type="button" class="btn-secondary-action" onclick="fetchDeviceLocation()" style="width:100%;height:38px;">
+                                        <i class="fa-solid fa-location-crosshairs" style="color:var(--brand-green);"></i>
+                                        <span id="gps-btn-text">Use Current GPS</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="gps-coords-display" style="font-size:0.74rem;color:var(--text-secondary);margin-bottom:14px;">Centroid: 20.1705°N, 73.9885°E (Nashik)</div>
+
+                            <!-- STEP 4: Image Upload Dropzone -->
+                            <div class="section-label">
+                                <span class="step-num" style="background:var(--brand-green);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;">4</span>
+                                <span data-i18n="step4_upload_photo">4. Upload Clear Leaf Photograph</span>
+                            </div>
+
+                            <input type="file" id="file-input-gallery" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                            <input type="file" id="file-input-camera" accept="image/*" capture="environment" style="display: none;" onchange="handleImageUpload(event)">
+
+                            <div class="upload-drop-zone" id="image-drop-zone" onclick="triggerGallery()">
+                                <div class="drop-icon-circle"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                                <span class="drop-title" data-i18n="drag_drop_title">Drag & Drop Leaf Photo Here or Browse</span>
+                                <span class="drop-sub" data-i18n="drag_drop_sub">JPG, PNG, WEBP Supported (Max 15 MB)</span>
+                            </div>
+
+                            <div class="upload-actions-row">
+                                <button type="button" class="btn-upload-choice primary-camera" onclick="triggerSmartCamera()">
+                                    <i class="fa-solid fa-camera"></i> <span data-i18n="btn_take_photo">Take Camera Photo</span>
+                                </button>
+                                <button type="button" class="btn-upload-choice" onclick="triggerGallery()">
+                                    <i class="fa-solid fa-images"></i> <span data-i18n="btn_choose_gallery">Choose from Gallery</span>
+                                </button>
+                            </div>
+
+                            <!-- Image Preview Area -->
+                            <div class="preview-container" id="preview-container">
+                                <img id="image-preview" src="" alt="Crop Preview">
+                                <button type="button" class="btn-clear-preview" onclick="clearSelectedImage()" title="Clear">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+
+                            <!-- Sample Images Shelf (Click to Test Instantly) -->
+                            <div class="sample-images-shelf">
+                                <span class="sample-label"><i class="fa-solid fa-vial-circle-check"></i> <span data-i18n="try_sample_specimens">Try Sample Leaf Specimens:</span></span>
+                                <div class="sample-strip">
+                                    <div class="sample-thumb-item" onclick="loadSampleImage('maize')" title="Maize Leaf">
+                                        <img src="/static/images/samples/sample_maize.jpg" alt="Maize leaf sample">
+                                    </div>
+                                    <div class="sample-thumb-item" onclick="loadSampleImage('tomato_blight')" title="Tomato Leaf">
+                                        <img src="/static/images/samples/sample_tomato.jpg" alt="Tomato leaf sample">
+                                    </div>
+                                    <div class="sample-thumb-item" onclick="loadSampleImage('healthy_leaf')" title="Healthy Leaf">
+                                        <img src="/static/images/samples/sample_healthy.jpg" alt="Healthy leaf sample">
+                                    </div>
+                                    <div class="sample-thumb-item" onclick="loadSampleImage('leaf_spot')" title="Leaf Spot">
+                                        <img src="/static/images/samples/sample_leaf_spot.jpg" alt="Leaf spot sample">
+                                    </div>
+                                    <div class="sample-thumb-item" onclick="loadSampleImage('citrus_leaf')" title="Citrus Leaf">
+                                        <img src="/static/images/samples/sample_citrus.jpg" alt="Citrus leaf sample">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Diagnosis Button -->
+                            <button type="button" id="btn-diagnose" class="btn-diagnose-submit" onclick="submitCropDiagnosis()">
+                                <i class="fa-solid fa-microchip"></i>
+                                <span data-i18n="btn_run_ai_diagnosis">Run AI Crop Health Diagnosis</span>
+                            </button>
+
+                            <!-- Analysis Progress Box -->
+                            <div class="analysis-progress-box" id="analysis-progress">
+                                <div class="progress-status-row">
+                                    <span id="scan-status-text">Validating specimen quality & analyzing foliage...</span>
+                                    <span id="scan-percentage">0%</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-fill" id="scan-bar-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: DIAGNOSTIC RESULT -->
+                        <div>
+                            <!-- Empty Placeholder -->
+                            <div class="card-white result-placeholder-card" id="result-placeholder">
+                                <div class="placeholder-icon"><i class="fa-solid fa-laptop-medical"></i></div>
+                                <h3 style="font-size:1.15rem;font-weight:700;color:var(--text-primary);margin-bottom:6px;" data-i18n="awaiting_scan_title">Diagnostic Results Will Appear Here</h3>
+                                <p style="font-size:0.84rem;max-width:340px;margin:0 auto;" data-i18n="awaiting_scan_sub">Select a supported crop on the left, upload a clear leaf photo, and click 'Run AI Crop Health Diagnosis'.</p>
+                            </div>
+
+                            <!-- Real Result Card -->
+                            <div class="result-card" id="result-card">
+                                <!-- Neutral Invalid / Out-of-Distribution Warning Box -->
+                                <div class="unrelated-warning-box" id="res-unrelated-box" style="display:none; padding:18px 20px; background:#f8fafc; border:2px solid #94a3b8; border-radius:10px; margin-bottom:16px;">
+                                    <div style="display:flex; align-items:center; gap:10px; color:#334155; font-weight:700; font-size:1rem; margin-bottom:6px;">
+                                        <i class="fa-solid fa-circle-exclamation" style="font-size:1.3rem; color:#64748b;"></i>
+                                        <span>Not Recognized Crop/Leaf Specimen</span>
+                                    </div>
+                                    <p id="res-unrelated-msg" style="color:#475569; font-size:0.9rem; line-height:1.6; margin:0;">
+                                        Not a recognized crop/leaf specimen. Please align a genuine plant leaf within the frame.
+                                    </p>
+                                </div>
+
+                                <!-- Valid Diagnostic Details Container (Hidden when specimen is invalid) -->
+                                <div id="res-valid-details">
+                                    <div class="result-header-row">
+                                        <div class="result-badge-group">
+                                            <span class="status-badge badge-identified" id="res-status-badge">✅ Condition Confirmed</span>
+                                            <span class="status-badge" id="res-type-badge" style="background:#e0e7ff;color:#3730a3;">Crop Disease</span>
+                                        </div>
+                                        <span class="case-id-tag" id="res-case-num">CASE-MH-2026-001</span>
+                                    </div>
+
+                                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin: 8px 0 4px 0;">
+                                        <div>
+                                            <h2 class="result-condition-title" id="res-condition-title" style="margin:0;">Maize: Fall Armyworm (Spodoptera frugiperda)</h2>
+                                            <p class="result-crop-subtitle" id="res-crop-subtitle" style="margin:4px 0 0 0;">Crop: Maize · Growth Stage: Vegetative</p>
+                                        </div>
+                                        <button type="button" id="btn-escalate-desk-diag" class="btn-escalate-desk" onclick="escalateCurrentDiagnosis()" style="display:none;" title="Escalate to District Agricultural Desk">
+                                            <i class="fa-solid fa-bullhorn"></i> Escalate to Agricultural Desk
+                                        </button>
+                                    </div>
+
+                                    <!-- Severe Outbreak Emergency Callout Banner -->
+                                    <div id="triage-emergency-banner" class="triage-emergency-callout" style="display:none;">
+                                        <div class="emergency-icon"><i class="fa-solid fa-phone-volume"></i></div>
+                                        <div class="emergency-text">
+                                            <strong>🚨 State Agriculture Emergency Desk: 1800-180-1551 / Taluka Agronomy Cell</strong>
+                                            <span>Severe epidemic pathogen / high-severity infestation detected (&gt;45% damage). Immediate government agronomy intervention recommended.</span>
+                                        </div>
+                                        <a href="tel:18001801551" class="btn-emergency-call"><i class="fa-solid fa-phone"></i> 1800-180-1551</a>
+                                    </div>
+
+                                    <!-- Visual Heatmap Overlay -->
+                                    <div class="overlay-preview-wrap" id="overlay-wrapper" style="display:none;">
+                                        <img id="res-overlay-img" src="" alt="Inference Heatmap">
+                                    </div>
+
+                                    <!-- Metric Bars -->
+                                    <div class="result-metrics-grid" id="res-metrics-grid">
+                                        <div class="metric-box">
+                                            <span class="metric-label" data-i18n="metric_confidence">AI Confidence</span>
+                                            <span class="metric-val" id="res-confidence-text">94%</span>
+                                            <div class="metric-bar-track"><div class="metric-bar-fill" id="confidence-fill" style="width: 94%;"></div></div>
+                                        </div>
+                                        <div class="metric-box">
+                                            <span class="metric-label" data-i18n="metric_damage">Leaf Damage</span>
+                                            <span class="metric-val" id="res-damage-text">22%</span>
+                                            <div class="metric-bar-track"><div class="metric-bar-fill" id="damage-fill" style="width: 22%; background: var(--brand-amber);"></div></div>
+                                        </div>
+                                        <div class="metric-box">
+                                            <span class="metric-label" data-i18n="metric_severity">Severity Level</span>
+                                            <div><span class="severity-tag sev-medium" id="res-severity-text">MODERATE</span></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Multi-factor Weather Risk Assessment Box -->
+                                    <div class="risk-eval-box" id="risk-box">
+                                        <div class="risk-eval-header">
+                                            <strong style="font-size:0.82rem;color:var(--text-primary);"><i class="fa-solid fa-shield-virus"></i> Weather-Based Risk Assessment</strong>
+                                            <span class="risk-badge badge-moderate" id="res-risk-badge">MODERATE RISK (54/100)</span>
+                                        </div>
+                                        <div style="font-size:0.8rem;margin-bottom:6px;font-weight:700;" id="res-risk-score">Risk Index: 54 / 100</div>
+                                        <ul class="risk-factors-list" id="res-risk-factors-ul">
+                                            <li><i class="fa-solid fa-angle-right"></i> Relative humidity of 72% creates favorable conditions for pest activity.</li>
+                                            <li><i class="fa-solid fa-angle-right"></i> Temperature between 28°C and 32°C is conducive to pest multiplication.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Doubt Doctor Clarification Box -->
+                                    <div class="doubt-doctor-box" id="res-doubt-doctor-box" style="display:none; margin-top:14px; padding:14px; background:#fffbeb; border:1px solid #fde68a; border-radius:8px;">
+                                        <div style="display:flex; align-items:center; gap:8px; font-weight:700; color:#b45309; font-size:0.86rem; margin-bottom:6px;">
+                                            <i class="fa-solid fa-stethoscope"></i> Doubt Doctor™ Differential Diagnosis
+                                        </div>
+                                        <p id="doubt-doctor-qtext" style="font-size:0.82rem; color:#92400e; margin-bottom:10px;">
+                                            <!-- Populated dynamically -->
+                                        </p>
+                                        <div style="display:flex; gap:8px;">
+                                            <button type="button" class="btn-primary-action" style="background:#16a34a; padding:6px 14px; font-size:0.78rem;" onclick="answerDoubtDoctorUi('YES')">YES</button>
+                                            <button type="button" class="btn-primary-action" style="background:#dc2626; padding:6px 14px; font-size:0.78rem;" onclick="answerDoubtDoctorUi('NO')">NO</button>
+                                            <button type="button" class="btn-secondary-action" style="padding:6px 14px; font-size:0.78rem;" onclick="answerDoubtDoctorUi('DONT_KNOW')">NOT SURE</button>
+                                        </div>
+                                        <div id="doubt-doctor-feedback" style="display:none; margin-top:8px; font-size:0.78rem; font-weight:600;"></div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="result-action-row" id="res-action-row">
+                                        <button type="button" class="btn-action-advisory" onclick="viewDetailedAdvisoryFromCurrent()">
+                                            <i class="fa-solid fa-prescription-bottle-medical"></i> <span data-i18n="btn_get_advisory">View IPM Advisory</span>
+                                        </button>
+                                        <button type="button" class="btn-action-expert" id="btn-show-inspection" onclick="openInspectionModal()">
+                                            <i class="fa-solid fa-clipboard-list"></i> Guided Field Inspection
+                                        </button>
+                                        <button type="button" class="btn-action-expert" onclick="openConfirmationModal()">
+                                            <i class="fa-solid fa-check-double"></i> Confirm Field Accuracy
+                                        </button>
+                                        <button type="button" class="btn-action-expert" onclick="openFollowupModal()">
+                                            <i class="fa-solid fa-camera"></i> Add Follow-up Photo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 3. MY FIELDS VIEW -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-fields" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-wheat-awn" style="color: var(--brand-green);"></i> <span data-i18n="nav_my_fields">My Farms (Farm Field Portfolio)</span></h2>
+                            <p class="page-subtitle" data-i18n="fields_subtitle">Manage farm plots, crop growth stages, irrigation telemetry, and active disease monitoring.</p>
+                        </div>
+                        <button type="button" class="btn-primary-action" onclick="showToast('Farm registration dialog opened.')">
+                            <i class="fa-solid fa-plus"></i> Register New Farm
+                        </button>
+                    </div>
+
+                    <div class="fields-grid" id="my-fields-container">
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                            <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.8rem; color: var(--brand-green); margin-bottom: 12px;"></i>
+                            <p>Loading registered farm plots...</p>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 4. PEST ALERTS VIEW -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-alerts" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-triangle-exclamation" style="color: var(--brand-amber);"></i> <span data-i18n="nav_pest_alerts">Pest & Disease Outbreak Surveillance Bulletin</span></h2>
+                            <p class="page-subtitle" data-i18n="alerts_subtitle">Real-time taluka-level pest and disease alerts issued by Agriculture Department and State Universities.</p>
+                        </div>
+                    </div>
+
+                    <!-- ESCALATED FARMER FIELD CASES DESK (Real-time Audit & Heat Map Sync) -->
+                    <div class="bulletin-escalated-section" id="bulletin-escalated-section">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                            <div>
+                                <h3 style="margin:0;font-size:1.05rem;color:var(--text-primary);display:flex;align-items:center;gap:8px;">
+                                    <i class="fa-solid fa-bullhorn" style="color:#ea580c;"></i> Escalated Field Telemetry & Outbreak Incidents
+                                </h3>
+                                <p style="margin:2px 0 0 0;font-size:0.78rem;color:var(--text-secondary);">Real-time farmer submissions escalated for District Agronomist audit & GIS outbreak tracking.</p>
+                            </div>
+                            <span class="status-badge badge-identified" id="bulletin-escalated-count">0 Cases Escalated</span>
+                        </div>
+                        <div class="bulletin-table-wrap">
+                            <table class="bulletin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Specimen</th>
+                                        <th>Case #</th>
+                                        <th>Crop</th>
+                                        <th>Suspected Condition</th>
+                                        <th>Severity</th>
+                                        <th>Location</th>
+                                        <th>Farmer</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bulletin-escalated-tbody">
+                                    <!-- Populated dynamically by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="margin: 18px 0 10px 0; font-weight:700; font-size: 0.95rem; color:var(--text-primary);">
+                        <i class="fa-solid fa-satellite-dish" style="color:var(--brand-green);"></i> Regional Outbreak Bulletins & Agro-Climatic Advisories
+                    </div>
+
+                    <div class="alerts-feed-list" id="alerts-full-feed">
+                        <div class="alert-feed-card critical">
+                            <div class="alert-feed-body">
+                                <div class="alert-feed-title">Maize: Fall Armyworm Outbreak (Spodoptera frugiperda)</div>
+                                <div class="alert-feed-meta">
+                                    <span><i class="fa-solid fa-map-pin"></i> Nashik, Ahmednagar, Jalgaon</span>
+                                    <span><i class="fa-solid fa-wheat-awn"></i> Affected Crop: Maize</span>
+                                    <span><i class="fa-regular fa-calendar"></i> August 2026</span>
+                                </div>
+                                <p class="alert-feed-desc">Cloudy weather and humidity over 65% accelerated armyworm pressure. Inspect plant whorls for frass and pinholes. Apply 5% neem seed kernel extract immediately.</p>
+                            </div>
+                            <span class="status-badge badge-image_quality_issue" style="margin-left:16px;">Critical Risk</span>
+                        </div>
+
+                        <div class="alert-feed-card moderate">
+                            <div class="alert-feed-body">
+                                <div class="alert-feed-title">Cotton: Pink Bollworm Surveillance Alert</div>
+                                <div class="alert-feed-meta">
+                                    <span><i class="fa-solid fa-map-pin"></i> Chhatrapati Sambhajinagar, Jalna, Parbhani, Nanded</span>
+                                    <span><i class="fa-solid fa-wheat-awn"></i> Affected Crop: Cotton (Surveillance)</span>
+                                    <span><i class="fa-regular fa-calendar"></i> August 2026</span>
+                                </div>
+                                <p class="alert-feed-desc">Cotton is in flowering and boll formation stage. Install 2 pheromone traps per acre. If trap catches exceed 8 moths/day for 3 consecutive days, release Trichogramma cards.</p>
+                            </div>
+                            <span class="status-badge badge-uncertain" style="margin-left:16px;">Moderate Risk</span>
+                        </div>
+
+                        <div class="alert-feed-card moderate">
+                            <div class="alert-feed-body">
+                                <div class="alert-feed-title">Tomato: Early Blight Alert (Alternaria solani)</div>
+                                <div class="alert-feed-meta">
+                                    <span><i class="fa-solid fa-map-pin"></i> Pune, Nashik, Satara</span>
+                                    <span><i class="fa-solid fa-wheat-awn"></i> Affected Crop: Tomato</span>
+                                    <span><i class="fa-regular fa-calendar"></i> August 2026</span>
+                                </div>
+                                <p class="alert-feed-desc">Prune lower leaves showing concentric brown spots. Apply Copper Oxychloride 50 WP @ 2.5g/L water protectively.</p>
+                            </div>
+                            <span class="status-badge badge-uncertain" style="margin-left:16px;">Moderate Risk</span>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 5. WEATHER & RISK FORECAST VIEW -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-weather" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-cloud-sun-rain" style="color: var(--brand-blue);"></i> <span data-i18n="nav_weather_risk">Micro-Climate Disease Risk Modeling & Weather Telemetry</span></h2>
+                            <p class="page-subtitle" data-i18n="weather_subtitle">Live satellite meteorological telemetry and agro-climatic algorithms for 7-day disease favorability predictions.</p>
+                        </div>
+                    </div>
+
+                    <div class="weather-layout-grid">
+                        <!-- Current Weather Card -->
+                        <div class="card-white">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                                <h3 style="font-size:1.1rem;font-weight:700;"><i class="fa-solid fa-satellite-dish" style="color:var(--brand-green);"></i> Live Weather Telemetry</h3>
+                                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                                    <label for="weather-district-select" style="font-size:0.78rem;color:var(--text-secondary);font-weight:700;">District</label>
+                                    <select id="weather-district-select" style="min-width:180px;padding:8px 12px;border:1px solid var(--border-card);border-radius:8px;background:#fff;font-size:0.82rem;">
+                                    </select>
+                                </div>
+                                <span style="font-size:0.75rem;color:var(--text-muted);" id="weather-source">Open-Meteo Satellite</span>
+                            </div>
+
+                            <div class="weather-telemetry-grid">
+                                <div class="weather-param-box">
+                                    <div class="param-icon"><i class="fa-solid fa-temperature-half"></i></div>
+                                    <div class="param-val" id="live-temp">28.5 °C</div>
+                                    <div class="param-name">Temperature</div>
+                                </div>
+                                <div class="weather-param-box">
+                                    <div class="param-icon"><i class="fa-solid fa-droplet"></i></div>
+                                    <div class="param-val" id="live-humidity">64 %</div>
+                                    <div class="param-name">Relative Humidity</div>
+                                </div>
+                                <div class="weather-param-box">
+                                    <div class="param-icon"><i class="fa-solid fa-cloud-rain"></i></div>
+                                    <div class="param-val" id="live-rain">0.0 mm</div>
+                                    <div class="param-name">Precipitation</div>
+                                </div>
+                                <div class="weather-param-box">
+                                    <div class="param-icon"><i class="fa-solid fa-wind"></i></div>
+                                    <div class="param-val" id="live-wind">11.2 km/h</div>
+                                    <div class="param-name">Wind Speed</div>
+                                </div>
+                            </div>
+
+                            <!-- 7-Day Chart in Weather View -->
+                            <div style="margin-top:24px;">
+                                <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:10px;"><i class="fa-solid fa-chart-area" style="color:var(--brand-amber);"></i> Weekly Disease Favorability Curve</h4>
+                                <div class="forecast-svg-wrapper" style="height:190px;">
+                                    <svg viewBox="0 0 420 160" preserveAspectRatio="none">
+                                        <defs>
+                                            <linearGradient id="riskGrad2" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#ef4444" stop-opacity="0.35"/>
+                                                <stop offset="100%" stop-color="#16a34a" stop-opacity="0.02"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <line x1="0" y1="40" x2="420" y2="40" stroke="#f1f5f9" stroke-dasharray="4"/>
+                                        <line x1="0" y1="90" x2="420" y2="90" stroke="#f1f5f9" stroke-dasharray="4"/>
+                                        <path d="M 10 130 Q 70 140 140 90 T 280 60 T 410 35 L 410 155 L 10 155 Z" fill="url(#riskGrad2)"/>
+                                        <path d="M 10 130 Q 70 140 140 90 T 280 60 T 410 35" fill="none" stroke="#dc2626" stroke-width="3"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Multi-factor Risk Indices -->
+                        <div class="card-white">
+                            <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:14px;"><i class="fa-solid fa-shield-virus" style="color:var(--brand-red);"></i> Agro-Meteorological Risk Indices</h3>
+                            <div class="risk-indices-list">
+                                <div class="risk-index-item">
+                                    <div class="risk-index-top">
+                                        <span>Fungal Spore Germination Index</span>
+                                        <strong style="color:var(--brand-amber);" id="risk-idx-fungal">65 / 100</strong>
+                                    </div>
+                                    <div class="bar-track"><div class="bar-fill" id="risk-bar-fungal" style="width:65%;background:var(--brand-amber);"></div></div>
+                                </div>
+
+                                <div class="risk-index-item">
+                                    <div class="risk-index-top">
+                                        <span>Insect Pest Multiplication Rate</span>
+                                        <strong style="color:var(--brand-red);" id="risk-idx-pest">78 / 100</strong>
+                                    </div>
+                                    <div class="bar-track"><div class="bar-fill" id="risk-bar-pest" style="width:78%;background:var(--brand-red);"></div></div>
+                                </div>
+
+                                <div class="risk-index-item">
+                                    <div class="risk-index-top">
+                                        <span>Foliar Spray Suitability Index</span>
+                                        <strong style="color:var(--brand-green);" id="risk-idx-spray">85 / 100</strong>
+                                    </div>
+                                    <div class="bar-track"><div class="bar-fill" id="risk-bar-spray" style="width:85%;background:var(--brand-green);"></div></div>
+                                </div>
+
+                                <div class="risk-index-item">
+                                    <div class="risk-index-top">
+                                        <span>Evapotranspiration & Heat Stress</span>
+                                        <strong style="color:var(--brand-green);" id="risk-idx-thermal">22 / 100</strong>
+                                    </div>
+                                    <div class="bar-track"><div class="bar-fill" id="risk-bar-thermal" style="width:22%;background:var(--brand-green);"></div></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:20px;padding:12px;background:var(--bg-workspace);border-radius:8px;font-size:0.8rem;">
+                                <strong><i class="fa-solid fa-circle-info"></i> Weather Advisory:</strong>
+                                <span id="weather-advice-text">Wind speed remains optimal for the next 72 hours; morning hours are recommended for foliar spraying.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 6. PEST HOTSPOT GIS MAP VIEW -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-hotspots" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-map-location-dot" style="color: var(--brand-green);"></i> <span data-i18n="nav_hotspot_map">Disease & Pest GIS Outbreak Hotspot Map</span></h2>
+                            <p class="page-subtitle" data-i18n="hotspots_subtitle">Interactive spatial geospatial map based on live farmer diagnostic telemetry and verified cases.</p>
+                        </div>
+                        <div style="display:flex;gap:8px;">
+                            <button type="button" class="btn-secondary-action" onclick="initGisMap()"><i class="fa-solid fa-arrows-rotate"></i> Refresh Map</button>
+                        </div>
+                    </div>
+
+                    <div class="gis-split-view">
+                        <!-- GIS Map -->
+                        <div class="gis-map-container">
+                            <div id="maharashtra-gis-map"></div>
+                        </div>
+
+                        <!-- Side Analytics & Hotspots List -->
+                        <div class="gis-side-panel">
+                            <h3 style="font-size:1.05rem;font-weight:700;"><i class="fa-solid fa-chart-pie" style="color:var(--brand-green);"></i> District Outbreak Severity Breakdown</h3>
+                            <div class="district-risk-bars" id="district-bars-container">
+                                <!-- Populated dynamically by JS -->
+                                <div class="district-bar-row">
+                                    <div class="dist-name-row"><span>Nashik</span><strong>42 Cases (12 High Risk)</strong></div>
+                                    <div class="bar-track"><div class="bar-fill" style="width:85%;"></div></div>
+                                </div>
+                                <div class="district-bar-row">
+                                    <div class="dist-name-row"><span>Ahmednagar</span><strong>34 Cases (9 High Risk)</strong></div>
+                                    <div class="bar-track"><div class="bar-fill" style="width:68%;"></div></div>
+                                </div>
+                                <div class="district-bar-row">
+                                    <div class="dist-name-row"><span>Aurangabad</span><strong>28 Cases (6 High Risk)</strong></div>
+                                    <div class="bar-track"><div class="bar-fill" style="width:55%;"></div></div>
+                                </div>
+                            </div>
+
+                            <h4 style="font-size:0.95rem;font-weight:700;margin-top:14px;"><i class="fa-solid fa-clock"></i> Recent Field Telemetry</h4>
+                            <div id="recent-alerts-container">
+                                <div class="alert-item-card" style="padding:8px 10px;background:var(--bg-workspace);border-radius:6px;font-size:0.78rem;margin-bottom:6px;">
+                                    <strong>Fall Armyworm (Maize)</strong>
+                                    <div>Dindori, Nashik · 74% Risk</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 7. TREATMENT ADVISORY VIEW (4 STRUCTURED CARDS) -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-advisory" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-prescription" style="color: var(--brand-green);"></i> <span data-i18n="nav_treatment_advisory">Integrated Pest Management (IPM) Advisory</span></h2>
+                            <p class="page-subtitle" data-i18n="advisory_subtitle">Official scientific action plans aligned with State Agricultural Universities and Central Insecticides Board (CIBRC).</p>
+                        </div>
+                        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                            <button type="button" class="btn-escalate-desk" id="btn-escalate-desk-advisory" style="display:none;" onclick="escalateCurrentDiagnosis()">
+                                <i class="fa-solid fa-tower-broadcast"></i> Escalate to Agricultural Desk
+                            </button>
+                            <button type="button" class="btn-secondary-action" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Advisory</button>
+                            <button type="button" class="btn-primary-action" onclick="shareAdvisoryWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Share via WhatsApp</button>
+                        </div>
+                    </div>
+
+                    <!-- Empty State for Treatment Advisory (shown when no diagnosis has been run) -->
+                    <div id="advisory-empty-state" style="text-align:center;padding:60px 24px;background:#ffffff;border-radius:14px;border:1px dashed #cbd5e1;margin-top:20px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.02);">
+                        <div style="width:72px;height:72px;border-radius:50%;background:#ecfdf5;color:#16a34a;font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <h3 style="font-size:1.35rem;font-weight:800;color:var(--text-primary);margin-bottom:8px;">No Diagnosis Initiated Yet</h3>
+                        <p style="font-size:0.92rem;color:var(--text-secondary);max-width:540px;margin:0 auto 24px;line-height:1.6;">
+                            You have not run any crop health diagnosis yet. Upload or scan a leaf photograph in the Crop Health Diagnosis section to generate your verified, crop-specific Integrated Pest Management (IPM) treatment plan.
+                        </p>
+                        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+                            <button type="button" class="btn-primary-action" onclick="switchView('diagnose')" style="padding:10px 24px;font-size:0.9rem;border-radius:8px;">
+                                <i class="fa-solid fa-camera-retro"></i> Start Crop Diagnosis Now
+                            </button>
+                            <button type="button" class="btn-secondary-action" onclick="switchView('dashboard')" style="padding:10px 20px;font-size:0.9rem;border-radius:8px;">
+                                <i class="fa-solid fa-house"></i> Return to Dashboard
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Active Advisory Content (shown after diagnosis is initiated) -->
+                    <div id="advisory-active-content" style="display:none;">
+                        <!-- Advisory Header Summary Card -->
+                        <div class="advisory-header-card">
+                            <div>
+                                <span class="status-badge badge-identified" style="margin-bottom:6px;display:inline-block;">Recommended IPM Treatment Plan</span>
+                                <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-primary);" id="adv-condition-heading">Maize: Fall Armyworm (Spodoptera frugiperda)</h2>
+                                <p style="font-size:0.85rem;color:var(--text-secondary);" id="adv-crop-subheading">Crop: Maize · Growth Stage: Vegetative · Severity: Moderate (22% damage)</p>
+                            </div>
+                            <div style="text-align:right;">
+                                <span style="font-size:0.74rem;color:var(--text-muted);">Recommendation Source:</span>
+                                <div style="font-weight:700;color:var(--brand-green);font-size:0.88rem;">MPKV Rahuri & CIBRC IPM Guidelines</div>
+                            </div>
+                        </div>
+
+                        <!-- 4 STRUCTURED CARDS GRID -->
+                        <div class="advisory-4-grid">
+                            <!-- Card 1: Immediate Sanitation & Cultural Action -->
+                            <div class="adv-card">
+                                <div class="adv-card-header">
+                                    <div class="adv-icon-badge red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div>
+                                        <h3>1. Immediate Sanitation & Cultural Controls</h3>
+                                        <small style="color:var(--text-muted);">Immediate Action & Cultural Sanitation</small>
+                                    </div>
+                                </div>
+                                <p id="res-ipm-immediate">Handpick and destroy visible larvae in whorls. Clean field borders and eradicate alternative grass weed hosts.</p>
+                                <div style="margin-top:12px;padding:10px;background:var(--bg-workspace);border-radius:6px;font-size:0.8rem;">
+                                    <strong>Cultural Practice:</strong> <span id="res-ipm-cultural">Carry out deep inter-cultivation to expose pupae to natural predators and sunlight.</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Biological / Organic IPM Control -->
+                            <div class="adv-card">
+                                <div class="adv-card-header">
+                                    <div class="adv-icon-badge green"><i class="fa-solid fa-leaf"></i></div>
+                                    <div>
+                                        <h3>2. Biological & Eco-Friendly Controls</h3>
+                                        <small style="color:var(--text-muted);">Biological & Biopesticide Measures</small>
+                                    </div>
+                                </div>
+                                <p id="res-ipm-biological">Spray 5% Neem Seed Kernel Extract (NSKE) or Azadirachtin 10,000 ppm @ 2 ml/L water. Apply entomopathogenic fungus Metarhizium rileyi @ 5 g/L into whorls.</p>
+                                <div style="margin-top:12px;display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--brand-green);font-weight:700;">
+                                    <i class="fa-solid fa-circle-check"></i> Safe for beneficial pollinators and honeybees.
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Chemical Control with Waiting Period -->
+                            <div class="adv-card">
+                                <div class="adv-card-header">
+                                    <div class="adv-icon-badge blue"><i class="fa-solid fa-flask-vial"></i></div>
+                                    <div>
+                                        <h3>3. Approved Chemical Control (Threshold-Based)</h3>
+                                        <small style="color:var(--text-muted);">Chemical Control with Safety Waiting Period</small>
+                                    </div>
+                                </div>
+                                <p id="res-ipm-chemical">If whorl infestation exceeds 10%: Apply Chlorantraniliprole 18.5% SC @ 0.4 ml/L or Spinetoram 11.7% SC @ 0.5 ml/L directly into whorls using a knapsack sprayer.</p>
+                                <div class="waiting-period-badge" style="background:#fef2f2;border:1px solid #fecaca;padding:8px 12px;border-radius:6px;margin-top:10px;font-size:0.8rem;color:#991b1b;font-weight:600;">
+                                    <i class="fa-solid fa-stopwatch"></i> Pre-Harvest Interval (PHI): 14 Days
+                                </div>
+                                <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:8px;" id="res-ipm-safety">
+                                    Safety: Wear standard PPE kit. Never spray against prevailing wind directions.
+                                </div>
+
+                                <!-- Interactive CIBRC Deterministic Safety Verifier -->
+                                <div class="cibrc-verifier-widget" style="margin-top:14px;padding:12px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.2);border-radius:8px;">
+                                    <div style="display:flex;align-items:center;gap:6px;font-size:0.84rem;font-weight:700;color:var(--brand-blue);margin-bottom:6px;">
+                                        <i class="fa-solid fa-shield-halved"></i> CIBRC Registered Pesticide Verification
+                                    </div>
+                                    <p style="font-size:0.74rem;color:var(--text-secondary);margin-bottom:8px;">
+                                        Enter commercial trade name to verify Central Insecticides Board approval, dosage, and waiting periods:
+                                    </p>
+                                    <div style="display:flex;gap:6px;">
+                                        <input type="text" id="cibrc-chemical-input" placeholder="e.g. Coragen, Nativo, Amistar Top..." style="flex:1;padding:6px 10px;font-size:0.8rem;border:1px solid var(--border-color);border-radius:6px;background:var(--bg-surface);color:var(--text-primary);">
+                                        <button type="button" class="btn-primary-action" style="padding:6px 14px;font-size:0.78rem;" onclick="checkCibrcPesticideUi()">Verify</button>
+                                    </div>
+                                    <div id="cibrc-check-result" style="display:none;margin-top:10px;padding:10px;border-radius:6px;font-size:0.78rem;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Growth Stage Precautions & Follow-up -->
+                            <div class="adv-card">
+                                <div class="adv-card-header">
+                                    <div class="adv-icon-badge purple"><i class="fa-solid fa-calendar-check"></i></div>
+                                    <div>
+                                        <h3>4. Crop Stage Monitoring & Follow-Up</h3>
+                                        <small style="color:var(--text-muted);">Stage Precautions & Follow-up Timeline</small>
+                                    </div>
+                                </div>
+                                <p id="res-followup-text">Recommended: Re-scout field within 5 to 7 days and upload a follow-up leaf photo to evaluate recovery.</p>
+                                <div style="margin-top:14px;">
+                                    <button type="button" class="btn-secondary-action" style="width:100%;justify-content:center;" onclick="openFollowupModal()">
+                                        <i class="fa-solid fa-camera"></i> Submit Follow-Up Photo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Help Banner -->
+                        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+                            <div style="display:flex;align-items:center;gap:14px;">
+                                <div style="width:42px;height:42px;border-radius:50%;background:#16a34a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">
+                                    <i class="fa-solid fa-phone-volume"></i>
+                                </div>
+                                <div>
+                                    <h4 style="font-size:0.95rem;font-weight:700;color:#14281d;">Krishi Vigyan Kendra (KVK) Agricultural Advisory Line</h4>
+                                    <p style="font-size:0.78rem;color:#4b6354;">Kisan Call Center Toll-Free Helpline: 1800-180-1551</p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-primary-action" onclick="showToast('Connecting to agricultural helpline...')">
+                                Call Helpline
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 8. SMART TRAPS & FIELD SENSORS VIEW -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-sensors" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-microchip" style="color: var(--brand-green);"></i> <span data-i18n="nav_smart_traps">Smart Traps & IoT Field Telemetry</span></h2>
+                            <p class="page-subtitle" data-i18n="sensors_subtitle">Automated pheromone trap counters, rain gauges, and micro-climate IoT field telemetry.</p>
+                        </div>
+                    </div>
+
+                    <!-- 5 SENSOR CARDS -->
+                    <div class="sensor-cards-grid">
+                        <div class="sensor-card">
+                            <span class="sensor-ready-badge">Ready</span>
+                            <div class="sensor-icon"><i class="fa-solid fa-bug"></i></div>
+                            <div class="sensor-val" id="sensor-moths">42</div>
+                            <div class="sensor-name">Automated Trap Count (Moths/Day)</div>
+                            <div class="sensor-status" style="color:var(--brand-red);">Economic Threshold Exceeded</div>
+                        </div>
+
+                        <div class="sensor-card">
+                            <span class="sensor-ready-badge">Live</span>
+                            <div class="sensor-icon" style="color:var(--brand-amber);"><i class="fa-solid fa-temperature-three-quarters"></i></div>
+                            <div class="sensor-val" id="sensor-temp">29.1 °C</div>
+                            <div class="sensor-name">Ambient Air Temperature</div>
+                            <div class="sensor-status">Normal Range</div>
+                        </div>
+
+                        <div class="sensor-card">
+                            <span class="sensor-ready-badge">Live</span>
+                            <div class="sensor-icon" style="color:var(--brand-blue);"><i class="fa-solid fa-droplet-percent"></i></div>
+                            <div class="sensor-val" id="sensor-hum">68 %</div>
+                            <div class="sensor-name">Relative Humidity</div>
+                            <div class="sensor-status" style="color:var(--brand-amber);">Conducive for Fungal Pathogens</div>
+                        </div>
+
+                        <div class="sensor-card">
+                            <span class="sensor-ready-badge">Ready</span>
+                            <div class="sensor-icon" style="color:#854d0e;"><i class="fa-solid fa-water"></i></div>
+                            <div class="sensor-val" id="sensor-soil">44 %</div>
+                            <div class="sensor-name">Soil Moisture Content</div>
+                            <div class="sensor-status">Optimal Irrigation Level</div>
+                        </div>
+
+                        <div class="sensor-card">
+                            <span class="sensor-ready-badge">Ready</span>
+                            <div class="sensor-icon" style="color:var(--brand-green);"><i class="fa-solid fa-leaf"></i></div>
+                            <div class="sensor-val" id="sensor-wetness">6.2 Hours</div>
+                            <div class="sensor-name">Leaf Wetness Duration</div>
+                            <div class="sensor-status">Moderate Risk Duration</div>
+                        </div>
+                    </div>
+
+                    <!-- Sensor Pest Activity Trend Chart -->
+                    <div class="card-white" style="margin-top:20px;">
+                        <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:12px;"><i class="fa-solid fa-chart-line" style="color:var(--brand-green);"></i> Automated Traps: Pest Catch Rate Trend</h3>
+                        <div class="forecast-svg-wrapper" style="height:200px;">
+                            <svg viewBox="0 0 420 160" preserveAspectRatio="none">
+                                <line x1="0" y1="50" x2="420" y2="50" stroke="#fecaca" stroke-dasharray="4"/>
+                                <text x="10" y="45" font-size="10" fill="#dc2626" font-weight="bold">Economic Threshold Level (ETL: 30 Moths)</text>
+                                <path d="M 10 130 Q 70 125 140 110 T 280 65 T 410 42" fill="none" stroke="#dc2626" stroke-width="3"/>
+                                <circle cx="410" cy="42" r="5" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 9. EXPERT REVIEW DESK -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-expert" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-user-doctor" style="color: var(--brand-green);"></i> <span data-i18n="nav_expert_desk">Agricultural Expert Review Desk</span></h2>
+                            <p class="page-subtitle" data-i18n="expert_subtitle">Verify uncertain AI diagnoses, review high-severity cases, and issue authenticated digital prescriptions.</p>
+                        </div>
+                        <button type="button" class="btn-secondary-action" onclick="loadPendingExpertCases()"><i class="fa-solid fa-arrows-rotate"></i> Refresh Queue</button>
+                    </div>
+
+                    <!-- KPI Strip -->
+                    <div class="kpi-grid-4" style="margin-bottom:20px;">
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap amber"><i class="fa-solid fa-clock"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">Pending Cases</span>
+                                <span class="kpi-value" id="expert-pending-stat">0</span>
+                                <span class="kpi-subtext">Verification Required</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap red"><i class="fa-solid fa-biohazard"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">High Severity Cases</span>
+                                <span class="kpi-value" id="expert-highrisk-stat">4</span>
+                                <span class="kpi-subtext">Immediate Attention</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap green"><i class="fa-solid fa-clipboard-check"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">Verified Cases</span>
+                                <span class="kpi-value" id="expert-reviewed-stat">28</span>
+                                <span class="kpi-subtext">Completed This Month</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap purple"><i class="fa-solid fa-flask"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">Lab Referrals</span>
+                                <span class="kpi-value" id="expert-lab-stat">2</span>
+                                <span class="kpi-subtext">Sent for Diagnostics</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cases Table -->
+                    <div class="table-responsive-card">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Case ID</th>
+                                    <th>Crop</th>
+                                    <th>Farmer & District</th>
+                                    <th>AI Detection</th>
+                                    <th>Confidence</th>
+                                    <th>Risk Level</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expert-cases-tbody">
+                                <tr><td colspan="8" style="text-align:center;padding:24px;">Loading pending expert cases queue...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+
+                <!-- ----------------------------------------------------------- -->
+                <!-- 10. AGRICULTURE OFFICER DASHBOARD -->
+                <!-- ----------------------------------------------------------- -->
+                <section id="view-officer" class="view-panel">
+                    <div class="page-title-row">
+                        <div class="page-title-group">
+                            <h2><i class="fa-solid fa-landmark" style="color: var(--brand-green);"></i> <span data-i18n="nav_officer_dashboard">State Agricultural Surveillance Command Center</span></h2>
+                            <p class="page-subtitle" data-i18n="officer_subtitle">District-level pest & disease outbreak monitoring, spatial cluster analytics, and emergency containment coordination.</p>
+                        </div>
+                    </div>
+
+                    <!-- Macro KPI Strip -->
+                    <div class="kpi-grid-4" style="margin-bottom:20px;">
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap green"><i class="fa-solid fa-folder-open"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">Total Telemetry Cases</span>
+                                <span class="kpi-value" id="kpi-total">0</span>
+                                <span class="kpi-subtext">Statewide Field Total</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap red"><i class="fa-solid fa-virus"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">Disease Cases</span>
+                                <span class="kpi-value" id="kpi-disease">0</span>
+                                <span class="kpi-subtext">Fungal / Bacterial / Viral</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap amber"><i class="fa-solid fa-bug"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">Pest Infestations</span>
+                                <span class="kpi-value" id="kpi-pest">0</span>
+                                <span class="kpi-subtext">Armyworm / Borers</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap purple"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="kpi-details">
+                                <span class="kpi-label">High Severity Cases</span>
+                                <span class="kpi-value" id="kpi-highrisk">0</span>
+                                <span class="kpi-subtext">Action Plans Deployed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GIS & Analytics Split -->
+                    <div class="dashboard-triplet-grid">
+                        <div class="widget-card" style="grid-column: span 2;">
+                            <div class="widget-header">
+                                <h3><i class="fa-solid fa-map-location-dot" style="color:var(--brand-green);"></i> District Outbreak Spatial Distribution</h3>
+                            </div>
+                            <div class="district-risk-bars" id="officer-district-bars">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="widget-card">
+                            <div class="widget-header">
+                                <h3><i class="fa-solid fa-bullhorn" style="color:var(--brand-amber);"></i> Outbreak Containment Coordination</h3>
+                            </div>
+                            <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:14px;">Elevated armyworm incidence detected in Nashik and Ahmednagar. Issue proactive advisory alerts to taluka officers.</p>
+                            <button type="button" class="btn-primary-action" style="width:100%;justify-content:center;" onclick="showToast('Emergency alert broadcasted to agricultural officers successfully!')">
+                                <i class="fa-solid fa-paper-plane"></i> Broadcast Emergency Alert
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+
+    <!-- ======================================================================= -->
+    <!-- MODALS -->
+    <!-- ======================================================================= -->
+
+    <!-- AUTH MODAL (LOGIN / SIGNUP / PERSONAS) -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 data-i18n="modal_auth_title">Sign In / Register (FALCON-AI)</h3>
+                <button type="button" class="btn-close-modal" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Auth Mode Toggle -->
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+                <button type="button" class="auth-role-pill active" id="auth-mode-login" onclick="switchAuthMode('login')" style="flex:1;text-align:center;">🔑 Sign In</button>
+                <button type="button" class="auth-role-pill" id="auth-mode-register" onclick="switchAuthMode('register')" style="flex:1;text-align:center;">📝 Register</button>
+            </div>
+
+            <!-- Registration Name Field (hidden for login) -->
+            <div class="form-group" id="register-name-group" style="margin-bottom:12px;display:none;">
+                <label data-i18n="label_fullname">Full Name</label>
+                <input type="text" id="auth-fullname" placeholder="Enter your full name">
+            </div>
+
+            <!-- Email or Phone Field -->
+            <div class="form-group" style="margin-bottom:12px;">
+                <label>Mobile Number or Email</label>
+                <input type="text" id="auth-email" placeholder="Enter your 10-digit mobile number or email">
+            </div>
+
+            <!-- Role Selection Standard Radios (Active in both Login and Registration) -->
+            <div id="auth-role-group" style="margin-bottom:16px;">
+                <label style="font-size:0.8rem;font-weight:700;color:var(--text-secondary);margin-bottom:8px;display:block;">Select Account Role:</label>
+                <div class="auth-role-radios" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:#f8fafc;padding:12px 14px;border-radius:8px;border:1px solid #cbd5e1;">
+                    <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:600;font-size:0.88rem;color:#1e293b;" id="role-card-farmer">
+                        <input type="radio" name="auth_role_selection" id="role-radio-farmer" value="farmer" onchange="switchAuthRole('farmer')">
+                        <span>Farmer</span>
+                    </label>
+                    <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:600;font-size:0.88rem;color:#1e293b;" id="role-card-expert">
+                        <input type="radio" name="auth_role_selection" id="role-radio-expert" value="expert" checked onchange="switchAuthRole('expert')">
+                        <span>Agricultural Expert</span>
+                    </label>
+                    <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:600;font-size:0.88rem;color:#1e293b;" id="role-card-officer">
+                        <input type="radio" name="auth_role_selection" id="role-radio-officer" value="officer" onchange="switchAuthRole('officer')">
+                        <span>Agricultural Officer</span>
+                    </label>
                 </div>
             </div>
 
-            <!-- RESULT CARD -->
-            <div id="result-card">
-                <h3 id="result-title">Status</h3>
-                <p id="result-disease">Disease Name</p>
-                <p id="result-confidence">Confidence: 0%</p>
-                <p id="result-message">Diagnostic summary...</p>
-                <div class="result-metrics">
-                    <div><strong id="result-leaf-area">0%</strong><span>leaf area found</span></div>
-                    <div><strong id="result-damage">0%</strong><span>estimated visible damage</span></div>
-                    <div><strong id="result-markers">0</strong><span>lesion markers</span></div>
+            <!-- Predefined Staff Restricted Notice & Quick Credentials Selector -->
+            <div id="staff-restricted-notice" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;font-weight:700;color:#166534;" id="staff-notice-title">
+                    <i class="fa-solid fa-shield-halved"></i> Official Restricted Portal
                 </div>
-                <img id="result-overlay" class="result-overlay" src="" alt="Annotated leaf showing estimated damage">
-                <div class="recommendation-box">
-                    <p class="recommendation-kicker"><i class="fa-solid fa-seedling"></i> Recommended next action</p>
-                    <strong id="result-action">Waiting for analysis</strong>
-                    <p id="result-dosage"></p>
-                    <p id="result-sensor-status"></p>
-                    <small id="result-reason"></small>
+                <p style="font-size:0.75rem;color:#14532d;margin:4px 0 8px 0;" id="staff-notice-desc">
+                    Access restricted exclusively to authorized Government of Maharashtra personnel. Password for all: <code style="background:#dcfce7;padding:1px 6px;border-radius:4px;font-weight:700;color:#15803d;">Falcon@2026</code>
+                </p>
+                <div style="font-size:0.74rem;font-weight:700;color:#1e293b;margin-bottom:6px;">Select Authorized Predefined Account to Auto-fill:</div>
+                <div id="staff-quick-chips" style="display:flex;flex-direction:column;gap:5px;max-height:130px;overflow-y:auto;">
+                    <!-- Dynamically populated per role -->
                 </div>
+            </div>
+
+
+            <!-- Farmer Onboarding Extended Details (Visible only for Farmer Registration) -->
+            <div id="farmer-profile-fields" style="display:none;background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:14px;">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--brand-green);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;">
+                    <i class="fa-solid fa-wheat-awn"></i> Farm Profile (Optional)
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+                    <div>
+                        <label style="font-size:0.72rem;color:var(--text-secondary);display:block;margin-bottom:2px;">District</label>
+                        <select id="auth-district" style="width:100%;padding:6px;font-size:0.8rem;border:1px solid #cbd5e1;border-radius:6px;">
+                            <option value="Nashik">Nashik</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Ahmednagar">Ahmednagar</option>
+                            <option value="Chhatrapati Sambhajinagar">Chhatrapati Sambhajinagar</option>
+                            <option value="Amravati">Amravati</option>
+                            <option value="Nagpur">Nagpur</option>
+                            <option value="Solapur">Solapur</option>
+                            <option value="Kolhapur">Kolhapur</option>
+                            <option value="Jalgaon">Jalgaon</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.72rem;color:var(--text-secondary);display:block;margin-bottom:2px;">Village / Taluka</label>
+                        <input type="text" id="auth-village" placeholder="e.g. Dindori" style="width:100%;padding:6px;font-size:0.8rem;border:1px solid #cbd5e1;border-radius:6px;">
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                    <div>
+                        <label style="font-size:0.72rem;color:var(--text-secondary);display:block;margin-bottom:2px;">Farm Area (Acres)</label>
+                        <input type="number" id="auth-acres" step="0.5" value="2.5" style="width:100%;padding:6px;font-size:0.8rem;border:1px solid #cbd5e1;border-radius:6px;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.72rem;color:var(--text-secondary);display:block;margin-bottom:2px;">Irrigation Type</label>
+                        <select id="auth-irrigation" style="width:100%;padding:6px;font-size:0.8rem;border:1px solid #cbd5e1;border-radius:6px;">
+                            <option value="Drip">Drip Irrigation</option>
+                            <option value="Sprinkler">Sprinkler</option>
+                            <option value="Rainfed">Rainfed</option>
+                            <option value="Flood">Canal / Well</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="expert-profile-fields" style="display:none;background:#eff6ff;padding:12px;border-radius:8px;border:1px solid #bfdbfe;margin-bottom:14px;">
+                <div style="font-size:0.75rem;font-weight:700;color:#1d4ed8;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;">Expert Profile</div>
+                <label style="font-size:0.72rem;color:#1e40af;display:block;margin-bottom:4px;">Area of Expertise</label>
+                <select id="auth-expert-specialization" style="width:100%;padding:7px;font-size:0.8rem;border:1px solid #93c5fd;border-radius:6px;">
+                    <option value="Plant Pathology">Plant Pathology</option>
+                    <option value="Entomology">Entomology and Pest Management</option>
+                    <option value="Agronomy">Agronomy and Crop Management</option>
+                    <option value="Horticulture">Horticulture</option>
+                    <option value="Soil Science">Soil Science</option>
+                </select>
+            </div>
+
+            <div id="officer-profile-fields" style="display:none;background:#f5f3ff;padding:12px;border-radius:8px;border:1px solid #ddd6fe;margin-bottom:14px;">
+                <div style="font-size:0.75rem;font-weight:700;color:#6d28d9;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;">Officer Profile</div>
+                <label style="font-size:0.72rem;color:#5b21b6;display:block;margin-bottom:4px;">Department / Responsibility</label>
+                <select id="auth-officer-department" style="width:100%;padding:7px;font-size:0.8rem;border:1px solid #c4b5fd;border-radius:6px;">
+                    <option value="District Agriculture Officer">District Agriculture Officer</option>
+                    <option value="Crop Protection and Surveillance">Crop Protection and Surveillance</option>
+                    <option value="Taluka Agriculture Officer">Taluka Agriculture Officer</option>
+                    <option value="Agricultural Extension">Agricultural Extension</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:18px;">
+                <label data-i18n="label_password">Password</label>
+                <input type="password" id="auth-password" placeholder="Enter password (min 6 characters)">
+            </div>
+
+            <button type="button" class="btn-primary-action" style="width:100%;justify-content:center;" id="auth-submit-btn" onclick="submitUserLogin()">
+                <span id="auth-submit-text">Sign In</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ======================================================================= -->
+    <!-- CAMERA CAPTURE MODAL -->
+    <div class="modal-overlay" id="camera-capture-modal">
+        <div class="modal-card" style="max-width:620px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-camera" style="color:var(--brand-green);"></i> Take Leaf Photo</h3>
+                <button type="button" class="btn-close-modal" onclick="closeCameraCapture()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <video id="camera-preview" autoplay playsinline muted style="display:block;width:100%;max-height:58vh;object-fit:cover;border-radius:10px;background:#0f172a;"></video>
+            <canvas id="camera-canvas" style="display:none;"></canvas>
+            <p id="camera-status" style="font-size:0.8rem;color:var(--text-secondary);margin:10px 0 0;">Center a genuine leaf in the frame.</p>
+            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;">
+                <button type="button" class="btn-secondary-action" onclick="closeCameraCapture()">Cancel</button>
+                <button type="button" class="btn-primary-action" onclick="captureCameraPhoto()"><i class="fa-solid fa-camera"></i> Capture Photo</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section class="history-section">
-        <div class="history-heading">
-            <div>
-                <p class="eyebrow">FIELD LOG</p>
-                <h2 class="section-title">Recent Diagnoses</h2>
+    <!-- VOICE ASSISTANT MODAL (कृषी सखा / KRISHI MITRA) -->
+    <!-- ======================================================================= -->
+    <div class="modal-overlay" id="voice-assistant-modal">
+        <div class="modal-card" style="max-width:520px;text-align:center;border-top:5px solid #16a34a;">
+            <div class="modal-header" style="justify-content:space-between;align-items:center;border-bottom:1px solid #f1f5f9;padding-bottom:10px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:1.6rem;">🌾</span>
+                    <div style="text-align:left;">
+                        <h3 style="margin:0;font-size:1.15rem;color:#14532d;">FALCON-AI Voice Assistant</h3>
+                        <small style="color:var(--text-secondary);font-size:0.75rem;">Government of Maharashtra · Agriculture Voice Agent</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeVoiceAssistant()"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <button type="button" class="history-export" onclick="exportPredictionHistory()"><i class="fa-solid fa-download"></i> Export report</button>
-        </div>
-        <div id="prediction-history" class="prediction-history">
-            <p class="empty-history">Your completed analyses will appear here.</p>
-        </div>
-    </section>
 
-    <!-- LIVE CAMERA MODAL -->
-    <div id="camera-modal">
-        <div class="camera-box">
-            <div class="camera-header">
-                <h3><i class="fa-solid fa-video"></i> Live Camera Feed</h3>
-                <button type="button" class="close-cam-btn" onclick="closeCameraModal()">&times;</button>
+            <div style="margin:24px 0 16px 0;display:flex;flex-direction:column;align-items:center;">
+                <!-- Animated Mic Sphere -->
+                <button type="button" id="voice-mic-main-btn" onclick="toggleSpeechRecognition()" style="width:84px;height:84px;border-radius:50%;background:#16a34a;color:#ffffff;font-size:2rem;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(22,163,74,0.4);transition:all 0.3s;">
+                    <i class="fa-solid fa-microphone" id="voice-mic-icon"></i>
+                </button>
+                <div id="voice-listening-pulse" style="display:none;margin-top:10px;font-weight:700;color:#dc2626;font-size:0.85rem;animation:pulse 1.2s infinite;">
+                    🔴 Listening... Speak your question now
+                </div>
+                <div id="voice-status-sub" style="margin-top:8px;font-size:0.8rem;color:var(--text-secondary);">
+                    Click the microphone and ask any farming question (e.g. "What pest affects maize?", "Today's weather?")
+                </div>
             </div>
-            <video id="webcam-stream" autoplay playsinline></video>
-            <canvas id="photo-canvas" style="display: none;"></canvas>
-            <div class="camera-controls">
-                <button type="button" class="btn-upload" onclick="captureWebcamFrame()">
-                    <i class="fa-solid fa-circle-dot"></i> Snap Photo
+
+            <!-- Transcript Bubble -->
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;margin-bottom:16px;text-align:left;max-height:160px;overflow-y:auto;">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);margin-bottom:4px;">Your Question:</div>
+                <div id="voice-user-transcript" style="font-size:0.9rem;color:#1e293b;font-weight:600;min-height:24px;">-</div>
+
+                <div style="border-top:1px dashed #cbd5e1;margin:8px 0;padding-top:8px;">
+                    <div style="font-size:0.75rem;font-weight:700;color:var(--brand-green);margin-bottom:4px;">AI Response:</div>
+                    <div id="voice-agent-reply" style="font-size:0.88rem;color:#065f46;line-height:1.5;">
+                        Hello! I'm your FALCON-AI farming assistant. Ask me any agriculture question about crops, pests, diseases, weather, or treatment advisory.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Prompts -->
+            <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px;">
+                <button type="button" class="stage-pill" onclick="simulateVoiceQuery('What is Fall Armyworm control for maize?')">🌽 Maize FAW</button>
+                <button type="button" class="stage-pill" onclick="simulateVoiceQuery('What fungicide for soybean rust?')">🌱 Soybean Rust</button>
+                <button type="button" class="stage-pill" onclick="simulateVoiceQuery('What is today\'s weather in Nashik?')">☁️ Weather</button>
+            </div>
+
+            <button type="button" class="btn-secondary-action" style="width:100%;justify-content:center;font-size:0.82rem;" onclick="closeVoiceAssistant()">
+                Close Assistant
+            </button>
+        </div>
+    </div>
+
+    <!-- QUICK-ACTION VOICE HELP MODAL -->
+    <div class="modal-overlay" id="quick-action-modal">
+        <div class="modal-card" style="max-width:540px;border-radius:14px;border-top:5px solid var(--brand-green);">
+            <div class="modal-header">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:36px;height:36px;border-radius:50%;background:#ecfdf5;color:#16a34a;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3 style="margin:0;font-size:1.15rem;color:var(--text-primary);">FALCON-AI Assistant & Quick Actions</h3>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeQuickActionModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-secondary);margin:8px 0 16px 0;line-height:1.5;">
+                FALCON-AI is your integrated agricultural decision support platform. Select a tool below or speak your query naturally:
+            </p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                <button type="button" class="quick-action-card-btn" onclick="closeQuickActionModal();switchView('diagnose');">
+                    <div class="qa-icon" style="background:#dcfce7;color:#15803d;"><i class="fa-solid fa-camera-retro"></i></div>
+                    <div>
+                        <strong>Scan Crop Leaf</strong>
+                        <small>AI disease detection & IPM advisory</small>
+                    </div>
+                </button>
+                <button type="button" class="quick-action-card-btn" onclick="closeQuickActionModal();switchView('weather');">
+                    <div class="qa-icon" style="background:#e0f2fe;color:#0369a1;"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+                    <div>
+                        <strong>Check Weather</strong>
+                        <small>Live telemetry & spray suitability</small>
+                    </div>
+                </button>
+                <button type="button" class="quick-action-card-btn" onclick="closeQuickActionModal();switchView('fields');">
+                    <div class="qa-icon" style="background:#fef3c7;color:#b45309;"><i class="fa-solid fa-wheat-awn"></i></div>
+                    <div>
+                        <strong>My Farms</strong>
+                        <small>Manage plots & crop health</small>
+                    </div>
+                </button>
+                <button type="button" class="quick-action-card-btn" onclick="closeQuickActionModal();switchView('advisory');">
+                    <div class="qa-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+                    <div>
+                        <strong>Treatment Advisory</strong>
+                        <small>Verified CIBRC chemical & organic IPM</small>
+                    </div>
+                </button>
+            </div>
+            <div style="background:#f8fafc;padding:12px 14px;border-radius:8px;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                <div style="font-size:0.8rem;color:#475569;">
+                    <i class="fa-solid fa-phone" style="color:#16a34a;margin-right:6px;"></i> Emergency Agri Helpline: <strong>1800-180-1551</strong>
+                </div>
+                <a href="tel:18001801551" class="btn-secondary-action" style="padding:4px 10px;font-size:0.75rem;">Call Desk</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- EXPERT REVIEW MODAL -->
+    <div class="modal-overlay" id="expert-review-modal">
+        <div class="modal-card" style="max-width:680px;">
+            <div class="modal-header">
+                <h3>Case Review: <span id="modal-case-num" style="font-family:monospace;color:var(--brand-green);">CASE-001</span></h3>
+                <button type="button" class="btn-close-modal" onclick="closeExpertModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:16px;margin-bottom:16px;">
+                <img id="modal-specimen-img" src="" alt="Specimen" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--border-card);">
+                <div id="modal-specimen-meta" style="font-size:0.82rem;line-height:1.6;display:flex;flex-direction:column;gap:4px;">
+                    <!-- Meta loaded by JS -->
+                </div>
+            </div>
+
+            <!-- Action Selector -->
+            <div style="display:flex;gap:8px;margin-bottom:14px;">
+                <button type="button" class="btn-secondary-action active" id="act-confirm" onclick="setExpertAction('CONFIRM')"><i class="fa-solid fa-check"></i> Confirm AI Diagnosis</button>
+                <button type="button" class="btn-secondary-action" id="act-correct" onclick="setExpertAction('CORRECT')"><i class="fa-solid fa-pen-to-square"></i> Correct Diagnosis</button>
+                <button type="button" class="btn-secondary-action" id="act-lab" onclick="setExpertAction('LAB_REFERRAL')"><i class="fa-solid fa-flask"></i> Refer to Laboratory</button>
+            </div>
+
+            <div class="form-group" id="corrected-condition-group" style="display:none;margin-bottom:12px;">
+                <label>Select Correct Condition</label>
+                <select id="modal-correction-code"></select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:16px;">
+                <label>Expert Notes & Digital Prescription</label>
+                <textarea id="modal-expert-notes" rows="3" placeholder="Write official prescription and advice for farmer..."></textarea>
+            </div>
+
+            <button type="button" class="btn-primary-action" style="width:100%;justify-content:center;" onclick="submitExpertVerdict()">
+                <i class="fa-solid fa-stamp"></i> Submit Official Verdict
+            </button>
+        </div>
+    </div>
+
+
+    <!-- FOLLOW-UP MODAL -->
+    <div class="modal-overlay" id="followup-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Add Follow-up Observation & Photo</h3>
+                <button type="button" class="btn-close-modal" onclick="closeFollowupModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:14px;">Upload a new photo 5 to 7 days post-treatment to verify symptom progression or recovery.</p>
+
+            <div class="form-group" style="margin-bottom:12px;">
+                <label>Choose Follow-up Photo</label>
+                <input type="file" id="followup-file" accept="image/*">
+            </div>
+
+            <div class="form-group" style="margin-bottom:12px;">
+                <label>Treatment Outcome</label>
+                <select id="followup-outcome-select">
+                    <option value="improved">Symptoms Reduced (Improvement Observed)</option>
+                    <option value="resolved">Condition Completely Resolved</option>
+                    <option value="unchanged">No Change (Unchanged)</option>
+                    <option value="worsened">Condition Worsened</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:16px;">
+                <label>Field Observations</label>
+                <textarea id="followup-notes" rows="2" placeholder="e.g. New foliage is healthy and green..."></textarea>
+            </div>
+
+            <button type="button" class="btn-primary-action" style="width:100%;justify-content:center;" onclick="submitFollowupCase()">
+                Save Follow-up
+            </button>
+        </div>
+    </div>
+
+
+    <!-- CONFIRMATION (GROUND TRUTH) MODAL -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Confirm Ground Truth Accuracy</h3>
+                <button type="button" class="btn-close-modal" onclick="closeConfirmationModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:14px;">Help improve AI model accuracy by confirming whether the diagnosis matched your field observations.</p>
+
+            <div class="form-group" style="margin-bottom:12px;">
+                <label>Was the AI Diagnosis Accurate?</label>
+                <select id="confirm-outcome-select">
+                    <option value="accurate">Yes, 100% Accurate</option>
+                    <option value="partially_accurate">Partially Matched</option>
+                    <option value="inaccurate">No, Different Symptoms</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:16px;">
+                <label>Additional Notes</label>
+                <textarea id="confirm-notes" rows="2" placeholder="e.g. Larval activity reduced 3 days after neem spray..."></textarea>
+            </div>
+
+            <button type="button" class="btn-primary-action" style="width:100%;justify-content:center;" onclick="submitFieldConfirmation()">
+                Submit Confirmation
+            </button>
+        </div>
+    </div>
+
+
+    <!-- GUIDED FIELD INSPECTION TASK MODAL -->
+    <div class="modal-overlay" id="inspection-modal">
+        <div class="modal-card" style="max-width:560px;">
+            <div class="modal-header">
+                <h3 id="inspection-modal-title"><i class="fa-solid fa-clipboard-list" style="color:var(--brand-green);"></i> Guided Field Inspection Tasks</h3>
+                <button type="button" class="btn-close-modal" onclick="closeInspectionModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;">
+                Perform these physical field inspection checks to differentiate vascular wilt, root rot, and stem borers:
+            </p>
+            <div id="inspection-steps-container" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+                <!-- Populated dynamically -->
+            </div>
+            <div style="background:#f8fafc;padding:10px 14px;border-radius:6px;font-size:0.8rem;color:#334155;margin-bottom:16px;">
+                <strong>Next Step:</strong> <span id="inspection-followup-action">Slice the stem base vertically and photograph internal vascular tissue for expert review.</span>
+            </div>
+            <button type="button" class="btn-primary-action" style="width:100%;justify-content:center;" onclick="closeInspectionModal()">
+                Close (Understood)
+            </button>
+        </div>
+    </div>
+
+    <!-- INSPIRATIONAL WELCOME QUOTE MODAL -->
+    <div class="modal-overlay" id="welcome-quote-modal" style="z-index:2100;">
+        <div class="modal-card" style="max-width:480px;text-align:center;border-radius:16px;padding:28px 24px;background:linear-gradient(145deg, #ffffff, #f0fdf4);border:2px solid #86efac;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);">
+            <div style="width:60px;height:60px;border-radius:50%;background:#dcfce7;color:#15803d;font-size:1.8rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                🌾
+            </div>
+            <h3 id="welcome-quote-title" style="font-size:1.25rem;font-weight:800;color:#14532d;margin-bottom:12px;">Welcome, Farmer! 👋</h3>
+            <div style="background:#ffffff;padding:16px;border-radius:12px;border:1px solid #bbf7d0;margin-bottom:20px;box-shadow:inset 0 2px 4px rgba(0,0,0,0.02);">
+                <p id="welcome-quote-text" style="font-size:0.95rem;font-style:italic;color:#166534;line-height:1.6;margin:0;">
+                    "Farming is a profession of hope. Let's protect your harvest today! 🌾"
+                </p>
+            </div>
+            <button type="button" class="btn-primary-action" onclick="closeWelcomeQuoteModal()" style="width:100%;justify-content:center;padding:10px 20px;font-size:0.95rem;border-radius:8px;">
+                <i class="fa-solid fa-seedling"></i> Get Started
+            </button>
+        </div>
+    </div>
+
+    <!-- WORK HISTORY & AUDIT TRAIL MODAL -->
+    <div class="modal-overlay" id="work-history-modal" style="z-index:2050;">
+        <div class="modal-card" style="max-width:640px;border-radius:14px;">
+            <div class="modal-header" style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color:var(--brand-green);font-size:1.2rem;"></i>
+                    <h3 style="margin:0;font-size:1.15rem;color:var(--text-primary);">User Activity & Work History Log</h3>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeWorkHistoryModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p style="font-size:0.8rem;color:var(--text-secondary);margin:8px 0 12px 0;">
+                Complete audit trail of user logins, search queries, voice consultations, and crop diagnoses.
+            </p>
+            <div style="max-height:420px;overflow-y:auto;border:1px solid #f1f5f9;border-radius:8px;" id="work-history-container">
+                <div style="text-align:center;padding:24px;color:#64748b;">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading activity logs...
+                </div>
+            </div>
+            <div style="margin-top:14px;text-align:right;">
+                <button type="button" class="btn-secondary-action" onclick="closeWorkHistoryModal()" style="font-size:0.82rem;padding:6px 16px;">
+                    Close
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- VISION SECTION -->
-    <section class="vision-section">
-        <h2 class="section-title">What this service provides</h2>
-        <div class="vision-grid">
-            <div class="vision-card">
-                <i class="fa-solid fa-leaf"></i>
-                <h3>Image-based screening</h3>
-                <p>A first-level assessment of visible crop symptoms from a photograph, designed to support timely field action.</p>
-            </div>
-            <div class="vision-card">
-                <i class="fa-solid fa-microscope"></i>
-                <h3>Evidence on the image</h3>
-                <p>Possible affected regions are marked on the uploaded leaf so the result can be reviewed rather than accepted as a black box.</p>
-            </div>
-            <div class="vision-card">
-                <i class="fa-solid fa-globe"></i>
-                <h3>Field-ready workflow</h3>
-                <p>Optional soil and weather readings help separate possible dehydration stress from a disease-like visual symptom.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- TEAM SECTION -->
-    <section class="team-section">
-        <h2 class="section-title">Project Team</h2>
-
-        <div class="team-grid">
-            <div class="team-card">
-                <div class="avatar-box" onclick="openDpModal('/static/images/ganii-2.jpeg', 'D. Lakshmi Ganesh')">
-                    <img src="/static/images/ganii-2.jpeg" alt="D. Lakshmi Ganesh" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
-                </div>
-                <h3>D. Lakshmi Ganesh</h3>
-                <p class="email-text"><a href="mailto:lakshmiganeshdarimadugu24@gmail.com">lakshmiganeshdarimadugu24@gmail.com</a></p>
-                <p class="phone-text" onclick="copyToClipboard('+918008742279', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 80087 42279</p>
-            </div>
-
-            <div class="team-card">
-                <div class="avatar-box kowsik-avatar" onclick="openDpModal('/static/images/kowsik.jpeg', 'T. Kowsik')">
-                    <img src="/static/images/kowsik.jpeg" alt="T. Kowsik" class="avatar-img kowsik-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
-                </div>
-                <h3>T. Kowsik</h3>
-                <p class="email-text"><a href="mailto:vu.241fa04a65@gmail.com">vu.241fa04a65@gmail.com</a></p>
-                <p class="phone-text" onclick="copyToClipboard('+919381119137', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 93811 19137</p>
-            </div>
-
-            <div class="team-card">
-                <div class="avatar-box" onclick="openDpModal('/static/images/anand.jpeg', 'P. Anand Babu')">
-                    <img src="/static/images/anand.jpeg" alt="P. Anand Babu" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
-                </div>
-                <h3>P. Anand Babu</h3>
-                <p class="email-text"><a href="mailto:vu.241fa04a60@gmail.com">vu.241fa04a60@gmail.com</a></p>
-                <p class="phone-text" onclick="copyToClipboard('+918978105292', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 89781 05292</p>
-            </div>
-
-            <div class="team-card">
-                <div class="avatar-box" onclick="openDpModal('/static/images/ajay.jpeg', 'CH. Ajay Kumar')">
-                    <img src="/static/images/ajay.jpeg" alt="CH. Ajay Kumar" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
-                </div>
-                <h3>CH. Ajay Kumar</h3>
-                <p class="email-text"><a href="mailto:ajayguptha710@gmail.com">ajayguptha710@gmail.com</a></p>
-                <p class="phone-text" onclick="copyToClipboard('+916304613594', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 63046 13594</p>
-            </div>
-
-            <div class="team-card">
-                <div class="avatar-box" onclick="openDpModal('/static/images/image.jpeg', 'C. Uhanjali')">
-                    <img src="/static/images/image.jpeg" alt="C. Uhanjali" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
-                </div>
-                <h3>C. Uhanjali</h3>
-                <p class="email-text"><a href="mailto:uhanjalicherukuri21@gmail.com">uhanjalicherukuri21@gmail.com</a></p>
-                <p class="phone-text" onclick="copyToClipboard('+918341758535', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 83417 58535</p>
-            </div>
-
-            <div class="team-card">
-                <div class="avatar-box" onclick="openDpModal('/static/images/immanuel.jpeg', 'R. Immanuel Praneeth')">
-                    <img src="/static/images/immanuel.jpeg" alt="R. Immanuel Praneeth" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="avatar-icon-fallback" style="display:none;"><i class="fa-solid fa-user"></i></div>
-                </div>
-                <h3>R. Immanuel Praneeth</h3>
-                <p class="email-text"><a href="mailto:immanuelpraneeth2006@gmail.com">immanuelpraneeth2006@gmail.com</a></p>
-                <p class="phone-text" onclick="copyToClipboard('+916305908311', 'Phone number copied!')"><i class="fa-solid fa-copy"></i> +91 63059 08311</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>FALCON-AI &middot; SIH26131 &middot; Crop health advisory prototype for Smart India Hackathon</p>
-    </footer>
-
-    <!-- FIX 2: Added cache-buster to the JS file so it actually loads your new code -->
-    <script src="/static/js/app.js?v={{ v if v else '1.0' }}"></script>
+    <!-- LEAFLET GIS SCRIPTS & APP LOGIC -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="/static/js/app.js?v={{ v if v else '2.4' }}"></script>
 </body>
 </html>

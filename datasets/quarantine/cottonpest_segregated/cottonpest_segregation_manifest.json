@@ -1,0 +1,9 @@
+{
+  "dataset": "CottonPest-BD",
+  "doi": "10.17632/wkjg6srrk8.2",
+  "total_images_processed": 0,
+  "harmful_boxes": 0,
+  "beneficial_boxes": 0,
+  "quarantined_images": 0,
+  "status": "CONFIGURED_AWAITING_SOURCE_DATA"
+}

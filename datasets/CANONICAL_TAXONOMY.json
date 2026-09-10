@@ -1,0 +1,357 @@
+{
+  "schema_version": "2.0.0",
+  "organization": "Government of Maharashtra / SIH 26131",
+  "updated_at": "2026-09-09T13:09:00+05:30",
+  "categories": {
+    "CROPS": [
+      {
+        "code": "cotton",
+        "name_en": "Cotton",
+        "name_mr": "कापूस",
+        "name_hi": "कपास",
+        "priority": "CRITICAL_MH"
+      },
+      {
+        "code": "soybean",
+        "name_en": "Soybean",
+        "name_mr": "सोयाबीन",
+        "name_hi": "सोयाबीन",
+        "priority": "CRITICAL_MH"
+      },
+      {
+        "code": "pigeonpea",
+        "name_en": "Pigeonpea (Tur)",
+        "name_mr": "तूर",
+        "name_hi": "अरहर / तुर",
+        "priority": "CRITICAL_MH"
+      },
+      {
+        "code": "onion",
+        "name_en": "Onion",
+        "name_mr": "कांदा",
+        "name_hi": "प्याज",
+        "priority": "CRITICAL_MH"
+      },
+      {
+        "code": "sugarcane",
+        "name_en": "Sugarcane",
+        "name_mr": "ऊस",
+        "name_hi": "गन्ना",
+        "priority": "HIGH_MH"
+      },
+      {
+        "code": "maize",
+        "name_en": "Maize / Corn",
+        "name_mr": "मका",
+        "name_hi": "मक्का",
+        "priority": "HIGH_MH"
+      },
+      {
+        "code": "wheat",
+        "name_en": "Wheat",
+        "name_mr": "गहू",
+        "name_hi": "गेहूं",
+        "priority": "HIGH_MH"
+      },
+      {
+        "code": "rice",
+        "name_en": "Rice / Paddy",
+        "name_mr": "भात / धान",
+        "name_hi": "धान / चावल",
+        "priority": "HIGH_MH"
+      },
+      {
+        "code": "tomato",
+        "name_en": "Tomato",
+        "name_mr": "टोमॅटो",
+        "name_hi": "टमाटर",
+        "priority": "HORTICULTURE"
+      },
+      {
+        "code": "grapes",
+        "name_en": "Grapes",
+        "name_mr": "द्राक्षे",
+        "name_hi": "अंगूर",
+        "priority": "HORTICULTURE"
+      },
+      {
+        "code": "citrus",
+        "name_en": "Citrus / Sweet Lime",
+        "name_mr": "मोसंबी / संत्री",
+        "name_hi": "संतरा / मौसमी",
+        "priority": "HORTICULTURE"
+      },
+      {
+        "code": "gram",
+        "name_en": "Bengal Gram / Chickpea",
+        "name_mr": "हरभरा / चना",
+        "name_hi": "चना",
+        "priority": "PULSES"
+      }
+    ],
+    "HEALTHY": [
+      {
+        "canonical_code": "cotton_healthy",
+        "crop": "cotton",
+        "name_en": "Healthy Cotton Canopy",
+        "name_mr": "निरोगी कापूस"
+      },
+      {
+        "canonical_code": "soybean_healthy",
+        "crop": "soybean",
+        "name_en": "Healthy Soybean Canopy",
+        "name_mr": "निरोगी सोयाबीन"
+      },
+      {
+        "canonical_code": "tur_healthy",
+        "crop": "pigeonpea",
+        "name_en": "Healthy Pigeonpea Canopy",
+        "name_mr": "निरोगी तूर"
+      },
+      {
+        "canonical_code": "onion_healthy",
+        "crop": "onion",
+        "name_en": "Healthy Onion Foliage",
+        "name_mr": "निरोगी कांदा"
+      },
+      {
+        "canonical_code": "maize_healthy",
+        "crop": "maize",
+        "name_en": "Healthy Corn Foliage",
+        "name_mr": "निरोगी मका"
+      },
+      {
+        "canonical_code": "tomato_healthy",
+        "crop": "tomato",
+        "name_en": "Healthy Tomato Foliage",
+        "name_mr": "निरोगी टोमॅटो"
+      }
+    ],
+    "DISEASES": [
+      {
+        "canonical_code": "cotton_bacterial_blight",
+        "crop": "cotton",
+        "pathogen": "Xanthomonas citri pv. malvacearum",
+        "type": "bacterial",
+        "name_en": "Cotton Bacterial Blight / Black Arm",
+        "name_mr": "कापसावरील करपा / काळा हात",
+        "name_hi": "कपास का जीवाणु झुलसा",
+        "etl_threshold": "5% foliar lesions on canopy",
+        "favorable_weather": {
+          "rh_min": 85,
+          "temp_min": 25,
+          "temp_max": 32
+        }
+      },
+      {
+        "canonical_code": "cotton_grey_mildew",
+        "crop": "cotton",
+        "pathogen": "Ramularia areola",
+        "type": "fungal",
+        "name_en": "Cotton Grey Mildew / Dahiya Disease",
+        "name_mr": "कापसावरील दहिया रोग",
+        "name_hi": "कपास का दहिया रोग",
+        "etl_threshold": "Faint powdery white angular patches on lower leaves",
+        "favorable_weather": {
+          "rh_min": 80,
+          "temp_min": 20,
+          "temp_max": 28
+        }
+      },
+      {
+        "canonical_code": "soybean_rust",
+        "crop": "soybean",
+        "pathogen": "Phakopsora pachyrhizi",
+        "type": "fungal",
+        "name_en": "Asian Soybean Rust",
+        "name_mr": "सोयाबीन तांबेरा",
+        "name_hi": "सोयाबीन गेरुई / रस्ट",
+        "etl_threshold": "First appearance of raised uredinia on lower leaves",
+        "favorable_weather": {
+          "rh_min": 85,
+          "temp_min": 18,
+          "temp_max": 26
+        }
+      },
+      {
+        "canonical_code": "soybean_bacterial_pustule",
+        "crop": "soybean",
+        "pathogen": "Xanthomonas axonopodis pv. glycines",
+        "type": "bacterial",
+        "name_en": "Soybean Bacterial Pustule",
+        "name_mr": "सोयाबीन जिवाणूजन्य पुटकुळ्या",
+        "name_hi": "सोयाबीन जीवाणु फफोले",
+        "etl_threshold": "Yellow-rimmed pustules spreading on upper leaves",
+        "favorable_weather": {
+          "rh_min": 80,
+          "temp_min": 28,
+          "temp_max": 35
+        }
+      },
+      {
+        "canonical_code": "soybean_sudden_death_syndrome",
+        "crop": "soybean",
+        "pathogen": "Fusarium virguliforme",
+        "type": "fungal",
+        "name_en": "Soybean Sudden Death Syndrome (SDS)",
+        "name_mr": "सोयाबीन अचानक वाळणे (एसडीएस)",
+        "name_hi": "सोयाबीन सडन डेथ सिंड्रोम",
+        "etl_threshold": "Interveinal chlorosis and necrosis while veins stay green",
+        "favorable_weather": {
+          "rh_min": 75,
+          "temp_min": 22,
+          "temp_max": 30
+        }
+      },
+      {
+        "canonical_code": "tur_sterility_mosaic",
+        "crop": "pigeonpea",
+        "pathogen": "Pigeonpea Sterility Mosaic Virus (PPSMV)",
+        "type": "viral",
+        "vector": "Aceria cajani (Eriophyid mite)",
+        "name_en": "Tur Sterility Mosaic Disease",
+        "name_mr": "तुरीवरील वांझ रोग / स्टेरिलिटी मोझॅक",
+        "name_hi": "अरहर का बांझपन मोज़ेक रोग",
+        "etl_threshold": "1 infected plant per 100 plants (Rogue out immediately)",
+        "favorable_weather": {
+          "rh_min": 60,
+          "temp_min": 25,
+          "temp_max": 35
+        }
+      },
+      {
+        "canonical_code": "tur_cercospora_leaf_spot",
+        "crop": "pigeonpea",
+        "pathogen": "Cercospora cajani",
+        "type": "fungal",
+        "name_en": "Tur Cercospora Leaf Spot",
+        "name_mr": "तुरीवरील पानांवरील ठिपके (सर्कॉस्पोरा)",
+        "name_hi": "अरहर का सर्कोस्पोरा पत्ती धब्बा",
+        "etl_threshold": "Circular necrotic brown spots with dark rings on 10% canopy",
+        "favorable_weather": {
+          "rh_min": 85,
+          "temp_min": 22,
+          "temp_max": 30
+        }
+      },
+      {
+        "canonical_code": "onion_purple_blotch",
+        "crop": "onion",
+        "pathogen": "Alternaria porri",
+        "type": "fungal",
+        "name_en": "Onion Purple Blotch",
+        "name_mr": "कांद्यावरील जांभळा करपा",
+        "name_hi": "प्याज का बैंगनी धब्बा",
+        "etl_threshold": "Purplish-brown sunken lesions with yellow halo on 5% foliage",
+        "favorable_weather": {
+          "rh_min": 85,
+          "temp_min": 20,
+          "temp_max": 30
+        }
+      }
+    ],
+    "PESTS": [
+      {
+        "canonical_code": "cotton_pink_bollworm",
+        "crop": "cotton",
+        "scientific_name": "Pectinophora gossypiella",
+        "type": "lepidopteran_borer",
+        "name_en": "Pink Bollworm (PBW)",
+        "name_mr": "गुलाबी बोंडअळी",
+        "name_hi": "गुलाबी सुंडी",
+        "etl_threshold": "8 live moths/trap/night for 3 consecutive nights OR 10% rosetted flowers",
+        "monitoring": "Pheromone trap monitoring with gossyplure septa"
+      },
+      {
+        "canonical_code": "cotton_mirid_bug",
+        "crop": "cotton",
+        "scientific_name": "Creontiades dilutus",
+        "type": "sucking_pest",
+        "name_en": "Cotton Mirid Bug",
+        "name_mr": "कापसावरील मिरिड बग",
+        "name_hi": "कपास मिरिड बग",
+        "etl_threshold": "1 bug per plant during squaring",
+        "monitoring": "Visual scouting on squares and young bolls"
+      },
+      {
+        "canonical_code": "tur_leaf_webber",
+        "crop": "pigeonpea",
+        "scientific_name": "Grapholita critica",
+        "type": "lepidopteran_caterpillar",
+        "name_en": "Tur Leaf Webber",
+        "name_mr": "तुरीवरील पान गुंडाळणारी अळी (वेबर)",
+        "name_hi": "अरहर की पत्ती लपेटक सुंडी",
+        "etl_threshold": "2-3 webbed leaf clusters per plant",
+        "monitoring": "Scout terminal shoots for webbed leaves and fecal frass"
+      }
+    ],
+    "BENEFICIAL_ORGANISMS": [
+      {
+        "canonical_code": "beneficial_lady_beetle",
+        "scientific_name": "Cheilomenes sexmaculata / Coccinellidae",
+        "role": "Generalist Predator (Biological Control Agent)",
+        "name_en": "Ladybird Beetle (Coccinellid)",
+        "name_mr": "ढालकिडा / लेडीबर्ड बीटल (मित्रकीड)",
+        "name_hi": "लेडीबर्ड भृंग (मित्र कीट)",
+        "prey": [
+          "Aphids",
+          "Whitefly nymphs",
+          "Jassid nymphs",
+          "Mite colonies"
+        ],
+        "preservation_policy": "DO NOT SPRAY. Conserve in cotton/soybean canopies."
+      },
+      {
+        "canonical_code": "beneficial_green_lacewing",
+        "scientific_name": "Chrysoperla carnea",
+        "role": "Predator (Aphid Lion)",
+        "name_en": "Green Lacewing",
+        "name_mr": "हिरवी जाळीदार पंखांची कीड / क्रायसोपा (मित्रकीड)",
+        "name_hi": "हरी जालीदार पंख वाली कीट (क्राइसोपा)",
+        "prey": [
+          "Aphids",
+          "Thrips",
+          "Early instar bollworms"
+        ],
+        "preservation_policy": "DO NOT SPRAY. Active biological control ally."
+      },
+      {
+        "canonical_code": "beneficial_hoverfly",
+        "scientific_name": "Syrphidae",
+        "role": "Predator & Pollinator",
+        "name_en": "Hoverfly (Syrphid Fly)",
+        "name_mr": "हॉव्हरफ्लाय (मित्रकीड व परागीकरण)",
+        "name_hi": "होवरफ्लाई (मित्र कीट)",
+        "prey": [
+          "Aphid colonies"
+        ],
+        "preservation_policy": "DO NOT SPRAY. Larvae consume aphids; adults pollinate flowers."
+      }
+    ],
+    "DAMAGE": [
+      {
+        "canonical_code": "cotton_leaf_reddening_lalya",
+        "crop": "cotton",
+        "cause": "Physiological / Abiotic (Magnesium deficiency, cold shock, waterlogging)",
+        "name_en": "Cotton Leaf Reddening (Lalya)",
+        "name_mr": "कापसावरील लाल्या रोग (शरीरक्रियात्मक विकार)",
+        "name_hi": "कपास का लाल पत्ती रोग (लाल्या)",
+        "action": "Do not spray chemical fungicides. Foliar spray 2% DAP + 1% Magnesium Sulphate."
+      }
+    ],
+    "UNKNOWN": {
+      "canonical_code": "unrecognized_symptom",
+      "name_en": "Unrecognized Foliar Symptom / Out-of-Distribution Crop",
+      "name_mr": "अपरिचित / अनाकलनीय लक्षणे (तज्ज्ञांकडे वर्ग)",
+      "name_hi": "अपरिचित लक्षण (विशेषज्ञ के पास भेजा गया)",
+      "action": "Route to Agricultural Officer / University Pathologist for verification."
+    },
+    "INSPECTION_REQUIRED": {
+      "canonical_code": "inspection_task_required",
+      "name_en": "Subsurface or Microscopic Pathology (Field Inspection Required)",
+      "name_mr": "सखोल प्रत्यक्ष तपासणी आवश्यक (मुळे, खोड, ट्रॅप)",
+      "name_hi": "क्षेत्रीय निरीक्षण आवश्यक (जड़, तना, ट्रैप)",
+      "action": "Generate guided field inspection task (underside of leaf, root split, pheromone trap count)."
+    }
+  }
+}

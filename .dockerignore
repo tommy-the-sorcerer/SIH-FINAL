@@ -1,0 +1,16 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+venv/
+ENV/
+.git
+.gitignore
+.gemini
+datasets/incoming/
+datasets/rejected/
+*.tmp
+*.log
+.DS_Store
