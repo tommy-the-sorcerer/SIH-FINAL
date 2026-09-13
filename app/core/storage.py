@@ -7,10 +7,12 @@ import sqlite3
 import hashlib
 import secrets
 import json
+import os
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
-DATABASE_PATH = Path(__file__).resolve().parent / "falcon_ai.db"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+DATABASE_PATH = Path(os.environ.get("FALCON_DB_PATH", PROJECT_ROOT / "falcon_ai.db"))
 
 
 def _connect():

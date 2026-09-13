@@ -20,22 +20,37 @@ from pathlib import Path
 from typing import Dict, Any, Optional, Tuple
 from ultralytics import YOLO
 
-from taxonomy import (
-    YOLO_CLASS_TAXONOMY,
-    get_crop_config,
-    get_district_info,
-    get_ipm_advisory,
-    DEFAULT_COORDINATES
-)
-from weather_service import get_current_weather
-from risk_engine import calculate_risk
-from i18n import get_translation
+try:
+    from app.core.taxonomy import (
+        YOLO_CLASS_TAXONOMY,
+        get_crop_config,
+        get_district_info,
+        get_ipm_advisory,
+        DEFAULT_COORDINATES
+    )
+    from app.services.weather_service import get_current_weather
+    from app.services.risk_engine import calculate_risk
+    from app.core.i18n import get_translation
+except ImportError:
+    from taxonomy import (
+        YOLO_CLASS_TAXONOMY,
+        get_crop_config,
+        get_district_info,
+        get_ipm_advisory,
+        DEFAULT_COORDINATES
+    )
+    from weather_service import get_current_weather
+    from risk_engine import calculate_risk
+    from i18n import get_translation
 
 CONFIDENCE_HIGH_THRESHOLD = 0.65
 CONFIDENCE_MIN_THRESHOLD = 0.35
 
 # Multi-path robust resolution for YOLO model
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 MODEL_PATHS = [
+    PROJECT_ROOT / "Models" / "PlantDiseaseDetection.pt",
+    PROJECT_ROOT / "models" / "PlantDiseaseDetection.pt",
     Path(__file__).resolve().parent / "Models" / "PlantDiseaseDetection.pt",
     Path(__file__).resolve().parent / "models" / "PlantDiseaseDetection.pt",
     Path("models/PlantDiseaseDetection.pt"),

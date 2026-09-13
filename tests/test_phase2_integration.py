@@ -8,7 +8,10 @@ import io
 from pathlib import Path
 from PIL import Image
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+for p in [PROJECT_ROOT, PROJECT_ROOT / "app", PROJECT_ROOT / "app" / "core", PROJECT_ROOT / "app" / "services"]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
 
 from fastapi.testclient import TestClient
 from main import app
